@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login">
+    <h4 class="error hidden"></h4>
+    <h1>Log in</h1>
+    <div class="container page-form">
+        <div class="overlay hidden"></div>
+        {% if not session['email'] %}
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-success">Log in</button>
+            </form>
+        {% else %}
+            <h1>You're already logged in!</h1>
+            <a href="{{ url_for('users.logoutUser') }}">Log out</a>
+        {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('button').click(function(e) {
+            e.preventDefault();
+            $('.error').addClass('hidden');
+            $('.error').text('');
+            $.ajax({
+                url: '{{ url_for("users.loginUser") }}',
+                data: $('form').serialize(),
+                type: 'POST',
+                beforeSend: function() {
+                    $('.overlay').removeClass('hidden');
+                },
+                success: function(response) {
+                    if (response.status === 'OK') {
+                        window.location.href = "{{ url_for('users.profile') }}";
+                    } else {
+                        $('.error').removeClass('hidden');
+                        $('.error').text('Could not log in');
+                    }
+                },
+                error: function(error) {
+                    $('.error').removeClass('hidden');
+                    $('.error').text(error);
+                },
+                complete: function() {
+                    $('.overlay').addClass('hidden');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

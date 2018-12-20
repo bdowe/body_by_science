@@ -1,0 +1,33 @@
+.contact {
+    overflow: auto;
+    .flex-row {
+        display: flex;
+        .flex-column {
+            padding: 100px 20px 50px;
+            &.contact-info {
+                flex-basis: auto;
+                width: 40%;
+                background-color: #0B172A;
+                color: #EBEBEB;
+                h2 {
+                    text-align: center;
+                }
+                .contact-subtext {
+                    margin-top: 25px;
+                    text-align: center;
+                    font-size: 18px;
+                }
+            }
+            &.contact-form {
+                flex-basis: auto;
+                width: 60%;
+                background-color: #F6F9FC;
+                h2 {
+                    text-align: center;
+                    color: #0B172A;
+                }
+            }
+        }
+    }
+
+}

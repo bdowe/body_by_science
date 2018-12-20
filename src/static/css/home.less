@@ -1,0 +1,136 @@
+@include "./colors.less";
+
+.home {
+    .jumbotron {
+        /* The image used */
+        background-image: url("../../images/home_background.JPG");
+
+        /* Full height */
+        height: 800px;
+
+        /* Center and scale the image nicely */
+        background-position: left top;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .what-we-do {
+        background-color: #0B172A;
+        .container-header {
+            color: #EBEBEB;
+        }
+    }
+
+    /*Carousel Start*/
+    .what-we-are {
+        background-color: #F6F9FC;
+        .container-header {
+            color: #1B264F;
+        }
+        .slides {
+            text-align: center;
+            position: relative;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .slick-slide {
+            background-color: transparent;
+            margin: 0 auto;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+            .image {
+                display: inline;
+                position: relative;
+                width: 50%;
+                img {
+                    display: inline;
+                    width: 50%;
+                    -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                    -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                    box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+            .text {
+                display: inline-block;
+                text-align: left;
+                padding: 80px 35px 0;
+                height: 100%;
+                width: 50%;
+                color: #1B264F;
+                .section-header {
+                    font-size: 30px;
+                    margin-bottom: 30px;
+                }
+            }
+        }
+        .slick-dots {
+            bottom: -35px;
+            li {
+                button:before {
+                   font-size: 10px;
+                    opacity: .8;
+                    color: #0B172A;
+                }
+                &.slick-active {
+                    button:before {
+                        opacity: 1;
+                        color: #BC4123;
+                    }
+                }
+            }
+        }
+    }
+    .cta {
+        padding: 100px 0;
+        text-align: center;
+        font-size: 24px;
+        .text {
+            display: inline-block;
+        }
+        a {
+            text-decoration: none;
+        }
+        .btn-cta {
+            display: inline-block;
+            border-radius: 6px;
+            padding: 20px 50px;
+            -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+            &:hover {
+                cursor: pointer;
+                -webkit-box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+                -moz-box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+                box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+            }
+        }
+        &.contact {
+            background-color: #1B264F;
+            .text {
+                color: #F6F9FC;
+            }
+
+        }
+        &.about {
+            background-color: #F6F9FC;
+            .text {
+                color: #1B264F;
+            }
+            .btn-cta {
+                background-color: #F6F9FC;
+                margin-left: 15px;
+                &:hover {
+                    a {
+                        color: #F6F9FC;
+                    }
+                    background-color: #1B264F;
+                }
+                a {
+                    color: #1B264F;
+                }
+            }
+        }
+    }
+}

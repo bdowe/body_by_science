@@ -1,0 +1,173 @@
+.about {
+  padding-top: 50px;
+}
+.about * {
+  font-weight: lighter;
+}
+.about .mission {
+  padding: 80px 40px 90px;
+  background-color: #0B172A;
+  color: #F6F9FC;
+  display: flex;
+  flex-wrap: wrap;
+}
+.about .mission h1 {
+  flex-basis: auto;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.about .mission .text-container {
+  flex-basis: auto;
+  display: inline-block;
+  width: 50%;
+}
+.about .mission .text-container .text {
+  font-size: 18px;
+  padding: 20px;
+  min-height: 130px;
+  background-color: #F6F9FC;
+  color: #333149;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.about .mission .text-container .text.text-left {
+  margin-right: 40px;
+}
+.about .mission .text-container .text.text-right {
+  margin-left: 40px;
+}
+.about .bio {
+  padding: 50px;
+  display: flex;
+}
+.about .bio .image {
+  flex-basis: auto;
+  width: 30%;
+}
+.about .bio .image img {
+  max-width: 100%;
+}
+.about .bio .text {
+  display: flex;
+  flex-basis: auto;
+  flex-wrap: wrap;
+  width: 70%;
+}
+.about .bio .text .name {
+  margin-bottom: 25px;
+}
+.about .bio .text .section {
+  margin-bottom: 20px;
+  padding-right: 15px;
+}
+.about .bio .text .section .title {
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-weight: bold;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.about .bio .text .section .description .bullet {
+  font-size: 16px;
+  padding-right: 5px;
+}
+.about .bio .text .section .description .bullet:not(:first-child) {
+  margin-top: 12px;
+}
+.about .bio .text .section.education {
+  flex-basis: auto;
+  width: 50%;
+}
+.about .bio .text .section.certifications {
+  flex-basis: auto;
+  width: 50%;
+}
+.about .bio .text .section.experience {
+  flex-basis: auto;
+  width: 70%;
+}
+.about .bio .text .section.specialties {
+  flex-basis: auto;
+  width: 30%;
+}
+.about .bio.josh {
+  background-color: #1B264F;
+  color: #F6F9FC;
+}
+.about .bio.josh .text {
+  padding-left: 25px;
+}
+.about .bio.josh .text .section .title {
+  border-bottom: 2px solid #BC4123;
+}
+.about .bio.sam {
+  background-color: #F6F9FC;
+  color: #1B264F;
+}
+.about .bio.sam .text {
+  padding-right: 25px;
+}
+.about .bio.sam .text .section .title {
+  border-bottom: 2px solid #1B264F;
+}
+.about .cta {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 24px;
+}
+.about .cta .text {
+  display: inline-block;
+}
+.about .cta a {
+  text-decoration: none;
+}
+.about .cta .btn-cta {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 20px 50px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+.about .cta .btn-cta:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.about .cta.contact {
+  background-color: #0B172A;
+}
+.about .cta.contact .text {
+  color: #F6F9FC;
+}
+.about .cta.contact .btn-cta {
+  background-color: #F6F9FC;
+  margin-left: 15px;
+}
+.about .cta.contact .btn-cta:hover {
+  background-color: #BC4123;
+}
+.about .cta.contact .btn-cta:hover a {
+  color: #F6F9FC;
+}
+.about .cta.contact .btn-cta a {
+  color: #1B264F;
+}
+.about .cta.resources {
+  background-color: #F6F9FC;
+}
+.about .cta.resources .text {
+  color: #1B264F;
+}
+.about .cta.resources .link-cta {
+  color: #BC4123;
+  padding-bottom: 2px;
+  display: inline;
+}
+.about .cta.resources .link-cta:hover {
+  border-bottom: 1px solid #BC4123;
+}

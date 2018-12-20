@@ -1,0 +1,39 @@
+<div class="header">
+    <h1 class="logo"><a href="{{ url_for('home') }}">Body By Science</a></h1>
+    <ul class="nav">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('resources') }}">Resources</a></li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        {% if session['email'] %}
+            <li class="dropdown-toggle">
+                <div class="text">Admin</div>
+                <ul class="dropdown-content hidden">
+                    <li><a href="{{ url_for('users.profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('users.logoutUser') }}">Log out</a></li>
+                    {% if isAdmin %}
+                        <li><a href="{{ url_for('posts.new') }}">Create post</a></li>
+                        <li><a href="{{ url_for('posts.addTag') }}">Add tag</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+<script>
+    $('.dropdown-toggle .text').on('click', function(e) {
+        e.stopPropagation();
+        var el = $(this).parent().find('.dropdown-content');
+        if (el.hasClass('hidden')) {
+            el.removeClass('hidden');
+        } else {
+            el.addClass('hidden');
+        }
+    });
+    $(document).click(function() {
+        if(!$(event.target).closest('.dropdown-content').length) {
+            $(".dropdown-content").addClass('hidden');
+        }
+	});
+</script>

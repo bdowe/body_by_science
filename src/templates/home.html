@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="home">
+    <div class="jumbotron"></div>
+    <div class="container what-we-are">
+        <div class="container-header">What We Are</div>
+        <div class="slides">
+            <div class="slide-1">
+                <div class="image">
+                    <img class="left" src="//img1.wsimg.com/isteam/stock/gY0VzW1/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                </div>
+                <div class="text">
+                    <div class="section-header">One site for all your needs</div>
+                    <div class="section-text">From strength and conditioning and performance, to nutrition and rehabilitation, it can be found here.</div>
+
+                </div>
+            </div>
+            <div class="slide-2">
+                <div class="text left">
+                    <div class="section-header">Personalized</div>
+                    <div class="section-text">Nutrition and exercise programs that fit your goals, lifestyle, body type and interests.</div>
+                </div>
+                <div class="image">
+                    <img class="right" src="//img1.wsimg.com/isteam/stock/6QyjY7j/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                </div>
+            </div>
+            <div class="slide-3">
+                <div class="image">
+                    <img class="left" src="//img1.wsimg.com/isteam/stock/Wb2a85r/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                </div>
+                <div class="text">
+                    <div class="section-header">Science based</div>
+                    <div class="section-text">All articles, blogs and editorials on this site are based on the most up to date research in the field. All articles are written by established professionals with either higher education degrees or professional certifications in the field</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container what-we-do">
+        <div class="container-header">What We Do</div>
+        <div class="grid">
+            <figure class="effect-chico">
+                <img src="../static/images/services1.jpeg"/>
+                <figcaption>
+                    <h2>Program design</h2>
+                    <p>Exercise routines designed specifically to reach your goals. No one person is the same, so why train that way?</p>
+                </figcaption>
+            </figure>
+            <figure class="effect-chico">
+                <img src="../static/images/services2.jpeg"/>
+                <figcaption>
+                    <h2>Performance nutrition</h2>
+                    <p>Nutrition consults intended to optimize current eating habits and boost performance on the field or in life.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="effect-chico">
+                <img src="../static/images/services3.jpeg"/>
+                <figcaption>
+                    <h2>Individualized nutrition plans</h2>
+                    <p>Analyze current dietary habits and design individualized meal plans to meet your nutrition goals.</p>
+                </figcaption>
+            </figure>
+
+            <figure class="effect-chico">
+                <img src="../static/images/services4.jpeg"/>
+                <figcaption>
+                    <h2>Supplement advice</h2>
+                    <p>Learn about heavily clinically researched supplements and how to incorporate them safely and effectively into your routine.</p>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+    <div class="cta about">
+        <div class="text">Want to learn more about us?</div>
+        <div class="btn-cta"><a href="{{ url_for('about') }}">Click here!</a></div>
+    </div>
+</div>
+{% endblock %}

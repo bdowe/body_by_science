@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="resource">
+    <div class="container">
+        <h1>{{ post['title'] }}</h1>
+        {% for paragraph in post['body'] %}
+            <div class="paragraph">{{ paragraph }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

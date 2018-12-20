@@ -1,0 +1,126 @@
+@include "./colors.less";
+.home {
+  /*Carousel Start*/
+}
+.home .jumbotron {
+  /* The image used */
+  background-image: url("../../images/home_background.JPG");
+  /* Full height */
+  height: 800px;
+  /* Center and scale the image nicely */
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home .what-we-do {
+  background-color: #0B172A;
+}
+.home .what-we-do .container-header {
+  color: #EBEBEB;
+}
+.home .what-we-are {
+  background-color: #F6F9FC;
+}
+.home .what-we-are .container-header {
+  color: #1B264F;
+}
+.home .what-we-are .slides {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+}
+.home .what-we-are .slick-slide {
+  background-color: transparent;
+  margin: 0 auto;
+  padding: 10px;
+  width: 100%;
+  position: relative;
+}
+.home .what-we-are .slick-slide .image {
+  display: inline;
+  position: relative;
+  width: 50%;
+}
+.home .what-we-are .slick-slide .image img {
+  display: inline;
+  width: 50%;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.home .what-we-are .slick-slide .text {
+  display: inline-block;
+  text-align: left;
+  padding: 80px 35px 0;
+  height: 100%;
+  width: 50%;
+  color: #1B264F;
+}
+.home .what-we-are .slick-slide .text .section-header {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.home .what-we-are .slick-dots {
+  bottom: -35px;
+}
+.home .what-we-are .slick-dots li button:before {
+  font-size: 10px;
+  opacity: 0.8;
+  color: #0B172A;
+}
+.home .what-we-are .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #BC4123;
+}
+.home .cta {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 24px;
+}
+.home .cta .text {
+  display: inline-block;
+}
+.home .cta a {
+  text-decoration: none;
+}
+.home .cta .btn-cta {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 20px 50px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+.home .cta .btn-cta:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.home .cta.contact {
+  background-color: #1B264F;
+}
+.home .cta.contact .text {
+  color: #F6F9FC;
+}
+.home .cta.about {
+  background-color: #F6F9FC;
+}
+.home .cta.about .text {
+  color: #1B264F;
+}
+.home .cta.about .btn-cta {
+  background-color: #F6F9FC;
+  margin-left: 15px;
+}
+.home .cta.about .btn-cta:hover {
+  background-color: #1B264F;
+}
+.home .cta.about .btn-cta:hover a {
+  color: #F6F9FC;
+}
+.home .cta.about .btn-cta a {
+  color: #1B264F;
+}

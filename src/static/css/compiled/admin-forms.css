@@ -1,0 +1,12 @@
+.add-post,
+.add-tag,
+.login {
+  background-color: #F6F9FC;
+  padding-top: 100px;
+}
+.add-post h1,
+.add-tag h1,
+.login h1 {
+  text-align: center;
+  color: #0B172A;
+}

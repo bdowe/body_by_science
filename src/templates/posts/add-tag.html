@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="add-tag container">
+    <h1>Add Tag</h1>
+    <h4 class="error hidden"></h4>
+    <div class="page-form">
+        <div class="overlay hidden"></div>
+        <form id="add-tag-form">
+            <div class="form-group">
+                <label for="tag">Tag</label>
+                <input type="text" id="tag" class="form-control" name="tag">
+            </div>
+            <button type="submit" class="btn btn-success">Create</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('button').click(function(e) {
+            e.preventDefault();
+            $('.error').addClass('hidden');
+            $('.error').text('');
+
+            if ($('input').val()) {
+                $.ajax({
+                    url: '{{ url_for('posts.insertTag') }}',
+                    data: $('#add-tag-form').serialize(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        $('.overlay').removeClass('hidden');
+                    },
+                    success: function(response) {
+                        if (response.status === 'OK') {
+                            window.location.href = "{{ url_for('users.profile') }}";
+                        } else {
+                            $('.error').removeClass('hidden');
+                            $('.error').text('Could not create tag');
+                        }
+                    },
+                    error: function(error) {
+                        $('.error').removeClass('hidden');
+                        $('.error').text(error);
+                    },
+                    complete: function() {
+                        $('.overlay').addClass('hidden');
+                    }
+                });
+            } else {
+                $('.error').removeClass('hidden');
+                $('.error').text('Error: tag name must be provided');
+            }
+        });
+    });
+</script>
+{% endblock %}

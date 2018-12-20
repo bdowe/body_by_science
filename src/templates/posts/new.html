@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="add-post container">
+    <h1>Create Post</h1>
+    <h4 class="error hidden"></h4>
+    <div class="page-form">
+    <div class="overlay hidden"></div>
+    <form id="create-post-form">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input id="title" class="form-control" name="title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" class="form-control" name="description"></textarea>
+        </div>
+        <div class="paragraphs">
+            <div class="form-group paragraph">
+                <label for="body">Body</label>
+                <textarea id="body" class="form-control" name="body"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn add-paragraph">Add paragraph</button>
+        <div class="form-group">
+            <label for="tag">Tag</label>
+            <select id="tag" class="form-control" name="tag">
+                <option value="0"></option>
+                {% for tag in tags %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+</div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var numParagraphs = 1;
+        var paragraphs = '';
+        $('button.add-paragraph').click(function(e) {
+            e.preventDefault();
+            numParagraphs++;
+            var paragraph = $('<div>').addClass('form-group').html("<div class='form-group paragraph'><label for='body'>Body-"+numParagraphs+"</label><textarea id='body' class='form-control' name='body'></textarea></div>");
+            paragraph.appendTo($('form .paragraphs'));
+        });
+        $('button.btn-success').click(function(e) {
+            e.preventDefault();
+            $('.error').addClass('hidden');
+            $('.error').text('');
+            var bodyParagraphs = $('.paragraphs').find('.paragraph');
+            var value = '';
+            bodyParagraphs.each(function(index) {
+                value = $(this).find('textarea').val();
+                if (index === 0) {
+                    paragraphs = value;
+                } else if (value) {
+                    paragraphs += ','+value;
+                }
+            });
+            if (paragraphs && $('select').val()) {
+                $.ajax({
+                    url: '{{ url_for('posts.create') }}',
+                    data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        $('.overlay').removeClass('hidden');
+                    },
+                    success: function(response) {
+                        if (response.status === 'OK') {
+                            window.location.href = "{{ url_for('resources') }}";
+                        } else {
+                            $('.error').removeClass('hidden');
+                            $('.error').text('Could not create post');
+                        }
+                    },
+                    error: function(error) {
+                        $('.error').removeClass('hidden');
+                        $('.error').text(error);
+                    },
+                    complete: function() {
+                        $('.overlay').addClass('hidden');
+                    }
+                });
+            } else {
+                $('.error').removeClass('hidden');
+                $('.error').text('Error: Body and tag are required');
+            }
+        });
+    });
+</script>
+{% endblock %}

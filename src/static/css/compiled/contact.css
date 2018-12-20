@@ -1,0 +1,32 @@
+.contact {
+  overflow: auto;
+}
+.contact .flex-row {
+  display: flex;
+}
+.contact .flex-row .flex-column {
+  padding: 100px 20px 50px;
+}
+.contact .flex-row .flex-column.contact-info {
+  flex-basis: auto;
+  width: 40%;
+  background-color: #0B172A;
+  color: #EBEBEB;
+}
+.contact .flex-row .flex-column.contact-info h2 {
+  text-align: center;
+}
+.contact .flex-row .flex-column.contact-info .contact-subtext {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 18px;
+}
+.contact .flex-row .flex-column.contact-form {
+  flex-basis: auto;
+  width: 60%;
+  background-color: #F6F9FC;
+}
+.contact .flex-row .flex-column.contact-form h2 {
+  text-align: center;
+  color: #0B172A;
+}

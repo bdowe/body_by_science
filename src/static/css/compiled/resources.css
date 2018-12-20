@@ -1,0 +1,50 @@
+.resources .page-form {
+  padding-top: 50px;
+}
+.resources .page-form .container {
+  padding: 15px 50px 40px;
+  background-color: #0B172A;
+  opacity: 0.95;
+}
+.resources .page-form .container form .form-group.tag-search {
+  border: none;
+}
+.resources .page-form .container form .form-group.tag-search label {
+  color: #F6F9FC;
+  margin-bottom: 10px;
+}
+.resources .page-form .container form .form-group.tag-search select {
+  background-color: #F6F9FC;
+  color: #0B172A;
+}
+.resources .posts .container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.resources .posts .container .post {
+  flex-basis: auto;
+  width: 25%;
+  height: 200px;
+  padding: 10px;
+}
+.resources .posts .container .post a {
+  text-decoration: none;
+}
+.resources .posts .container .post a .content {
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  height: 100%;
+  width: 100%;
+  padding: 20px 5px;
+  background-color: #0B172A;
+  color: #F6F9FC;
+  opacity: 0.9;
+}
+.resources .posts .container .post a .content .title {
+  text-align: center;
+}
+.resources .posts .container .post a .content .description {
+  text-align: center;
+  margin-top: 20px;
+}

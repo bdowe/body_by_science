@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="about">
+    <div class="mission">
+        <h1>Our Philosophy</h1>
+        <div class="text-container">
+            <div class="text text-left">"Hard work looks good on everyone. The day we decide to stop trying hard, is the day we have thrown in the towel on progress and improving ourselves and the people around us. You want something, work for it!"</div>
+        </div>
+        <div class="text-container">
+            <div class="text text-right">"Simplicity. Our world tends to be over-scienced. Taking a step back and looking at the overall picture may be the answer to small questions."</div>
+        </div>
+    </div>
+    <div class="cta resources">
+        <div class="text">Want to dive in? Check out our amazing <a class="link-cta" href="#">resources</a></div>
+    </div>
+    <div class="josh bio">
+        <div class="image">
+            <img src="//img1.wsimg.com/isteam/ip/5250dfa0-90b7-48a6-bcae-a11c5f847a31/050d7e17-c5ac-4f3b-b5ab-52ab1a0ba177.JPG/:/rs=w:400,cg:true,m">
+        </div>
+        <div class="text">
+            <div class="name"><h1>JOSHUA DALESSANDRO MS, CSCS, CISSN</h1></div>
+            <div class="section education">
+                <div class="title">Education</div>
+                <div class="description">
+                    <div class="bullet">Master of Science, Exercise Physiology, Florida State University</div>
+                    <div class="bullet">Bachelor of Science, Exercise Science, Skidmore College</div>
+                </div>
+            </div>
+            <div class="section certifications">
+                <div class="title">Certifications</div>
+                <div class="description">
+                    <div class="bullet">NSCA Certified Strength and Conditioning Coach</div>
+                    <div class="bullet">CISSN Certified Sports Nutritionist</div>
+                </div>
+            </div>
+            <div class="section experience">
+                <div class="title">Experience</div>
+                <div class="description">
+                    <div class="bullet">-Worked with Division 1 collegiate athletes at Florida State</div>
+                    <div class="bullet">-Spent a year partaking in research at the Institute of Sport Science and Medicine at Florida State</div>
+                    <div class="bullet">-Full time Strength coach at Texas A&M Kingsville</div>
+                    <div class="bullet">-Current Exercise and Nutrition Counselor at Cenegenics in New York</div>
+                    <div class="bullet">-Personal training experience: 6 years</div>
+                </div>
+            </div>
+            <div class="section specialties">
+                <div class="title">Specialties</div>
+                <div class="description">
+                    <div class="bullet">-Body composition training</div>
+                    <div class="bullet">-Supplementation to enhance athletic performance</div>
+                    <div class="bullet">-Strength training/power lifting</div>
+                    <div class="bullet">-HIIT</div>
+                    <div class="bullet">-Spartan type events</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sam bio">
+        <div class="text">
+            <div class="name"><h1>SAM KRAMER MS, RD, LDN, CISSN</h1></div>
+            <div class="section education">
+                <div class="title">Education</div>
+                <div class="description">
+                    <div class="bullet">M.S. Exercise Physiology, Florida State University</div>
+                    <div class="bullet">B.S. Nutrition Science, Rutgers University (Summa Cum Laude)</div>
+                </div>
+            </div>
+            <div class="section certifications">
+                <div class="title">Certifications</div>
+                <div class="description">
+                    <div class="bullet">Registered and Licensed Dietitian</div>
+                    <div class="bullet">CISSN Certified Sports Nutritionist</div>
+                </div>
+            </div>
+            <div class="section experience">
+                <div class="title">Experience</div>
+                <div class="description">
+                    <div class="bullet">- Research & Development Dietitian for Vitacost.com</div>
+                    <div class="bullet">- Published peer-reviewed research and two books</div>
+                    <div class="bullet">- Professor at Palm Beach State College </div>
+                    <div class="bullet">- Florida State University Sports Nutrition Intern</div>
+                    <div class="bullet">- Philadelphia Eagles Sports Nutrition Intern</div>
+                </div>
+            </div>
+            <div class="section specialties">
+                <div class="title">Specialties</div>
+                <div class="description">
+                    <div class="bullet">- Supplementation and Product Development</div>
+                    <div class="bullet">- Sports Nutrition </div>
+                    <div class="bullet">- Nutrition for Rowing</div>
+                    <div class="bullet">-Education </div>
+                </div>
+            </div>
+        </div>
+        <div class="image">
+            <img src="//img1.wsimg.com/isteam/ip/5250dfa0-90b7-48a6-bcae-a11c5f847a31/398c93d0-c3db-45ae-9ac9-81a624aa184b.jpg/:/rs=w:400,cg:true,m">
+        </div>
+    </div>
+    <div class="cta contact">
+        <div class="text">Want to get in touch?</div>
+        <div class="btn-cta"><a href="{{ url_for('contact') }}">Contact us now!</a></div>
+    </div>
+</div>
+{% endblock %}

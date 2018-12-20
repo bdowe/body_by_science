@@ -1,0 +1,79 @@
+@include "./colors.less";
+.header {
+  padding: 0 50px;
+  position: fixed;
+  width: 100%;
+  background-color: #FAFAFA;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  height: 50px;
+  line-height: 50px;
+  transition: all 0.4s ease;
+  z-index: 10000;
+}
+.header .nav {
+  display: inline-block;
+  height: 100%;
+  float: right;
+}
+.header .nav li {
+  display: inline;
+  list-style-type: none;
+  padding: 0 15px;
+}
+.header .nav li:first-child {
+  padding-left: 0;
+}
+.header .nav li:last-child {
+  padding-right: 0;
+}
+.header .nav li a {
+  color: #0B172A;
+  text-decoration: none;
+  padding-bottom: 3px;
+}
+.header .nav li a:hover {
+  border-bottom: 1px solid #BC4123;
+}
+.header .nav li.dropdown-toggle {
+  color: #0B172A;
+  position: relative;
+}
+.header .nav li.dropdown-toggle .text {
+  display: inline;
+  padding-bottom: 3px;
+}
+.header .nav li.dropdown-toggle .text:hover {
+  cursor: pointer;
+  border-bottom: 1px solid #BC4123;
+}
+.header .nav li.dropdown-toggle .dropdown-content {
+  position: absolute;
+  right: 0;
+  margin-top: -3px;
+  width: 130px;
+  background-color: #FAFAFA;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.header .nav li.dropdown-toggle .dropdown-content.hidden {
+  display: none;
+}
+.header .nav li.dropdown-toggle .dropdown-content li {
+  display: block;
+  padding: 0 0 0 15px;
+}
+.header .logo {
+  display: inline-block;
+  height: 100%;
+  float: left;
+  color: #0B172A;
+  font-weight: lighter;
+}
+.header .logo a {
+  color: #0B172A;
+  text-decoration: none;
+}
