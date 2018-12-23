@@ -5,7 +5,7 @@
   display: flex;
 }
 .contact .flex-row .flex-column {
-  padding: 100px 20px 50px;
+  padding: 150px 20px 100px;
 }
 .contact .flex-row .flex-column.contact-info {
   flex-basis: auto;
