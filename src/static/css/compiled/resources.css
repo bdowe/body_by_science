@@ -1,5 +1,6 @@
 .resources {
   background-color: #FFF;
+  min-height: 700px;
 }
 .resources .page-form {
   padding-top: 50px;
@@ -19,6 +20,9 @@
 .resources .page-form .container form .form-group.tag-search select {
   background-color: #F6F9FC;
   color: #0B172A;
+}
+.resources .posts {
+  position: relative;
 }
 .resources .posts .container {
   display: flex;
