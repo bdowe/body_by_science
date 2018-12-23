@@ -9,12 +9,11 @@
             <li class="dropdown-toggle">
                 <div class="text">Admin</div>
                 <ul class="dropdown-content hidden">
-                    <li><a href="{{ url_for('users.profile') }}">Profile</a></li>
-                    <li><a href="{{ url_for('users.logoutUser') }}">Log out</a></li>
                     {% if isAdmin %}
                         <li><a href="{{ url_for('posts.new') }}">Create post</a></li>
                         <li><a href="{{ url_for('posts.addTag') }}">Add tag</a></li>
                     {% endif %}
+                    <li><a href="{{ url_for('users.logoutUser') }}">Log out</a></li>
                 </ul>
             </li>
         {% endif %}

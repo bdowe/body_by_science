@@ -36,7 +36,7 @@
                         </div>
                     </a>
                 </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
@@ -55,7 +55,7 @@
             postDiv = $('<div>').addClass('post');
             contentContainer = $('<a>').attr('href', '/resource/'+post['_id'])
             content = $('<div>').addClass('content');
-            title = $('<div>').addClass('title').html('<h4>'+post['body']+'</h4>');
+            title = $('<div>').addClass('title').html('<h4>'+post['title']+'</h4>');
             description = $('<div>').addClass('description').html(post['description']);
             title.appendTo(content);
             description.appendTo(content);
