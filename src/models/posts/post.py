@@ -11,7 +11,7 @@ class Post(object):
     @staticmethod
     def new(title, description, body, tag):
         email = session['email']
-        if title and description and email and body:
+        if title and description and email and body and tag:
             body = body.split(',')
             user = User.getByEmail(email)
             Database.insert('posts', {'title': title, 'description': description, 'body': body, "tag": tag, 'timestamp': datetime.datetime.now(), 'user_id': user['_id']})
@@ -21,7 +21,7 @@ class Post(object):
     @staticmethod
     def update(post_id, title, description, body, tag):
         email = session['email']
-        if title and description and email and body:
+        if post_id and title and description and email and body and tag:
             body = body.split(',')
             user = User.getByEmail(email)
             Database.update('posts', {'_id': ObjectId(post_id)}, {'_id': ObjectId(post_id), 'title': title, 'description': description, 'body': body, "tag": tag,

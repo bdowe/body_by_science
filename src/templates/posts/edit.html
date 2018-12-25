@@ -13,15 +13,10 @@
             <label for="description">Description</label>
             <textarea id="description" class="form-control" name="description">{{ post['description'] }}</textarea>
         </div>
-        <div class="paragraphs">
-            {% for paragraph in post['body'].split(',') %}
-                <div class="form-group paragraph">
-                    <label for="body">Body</label>
-                    <textarea id="body" class="form-control" name="body">{{ paragraph }}</textarea>
-                </div>
-            {% endfor %}
+        <div class="form-group paragraphs">
+            <label for="body">Body</label>
+            <textarea id="body" class="form-control" name="body">{{ '\n\n'.join(post['body'].split(',')) }}</textarea>
         </div>
-        <button type="submit" class="btn add-paragraph">Add paragraph</button>
         <div class="form-group">
             <label for="tag">Tag</label>
             <select id="tag" class="form-control" name="tag">
@@ -42,17 +37,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log("{{post['_id']}}");
-
         var numParagraphs = 1;
         var paragraphs = '';
         var canUpdate = false;
-        $('button.add-paragraph').click(function(e) {
-            e.preventDefault();
-            numParagraphs++;
-            var paragraph = $('<div>').addClass('form-group').html("<div class='form-group paragraph'><label for='body'>Body-"+numParagraphs+"</label><textarea id='body' class='form-control' name='body'></textarea></div>");
-            paragraph.appendTo($('form .paragraphs'));
-        });
         $("input, textarea").keyup(function(){
             var post = {
                 "title": "{{post['title']}}",
@@ -76,7 +63,6 @@
                 $('button.update').addClass('disabled');
                 canUpdate = false;
             }
-            console.log(post['body'] === paragraphs);
         });
         $('select').change(function(e) {
             var post = {
@@ -86,13 +72,7 @@
                 "tag": "{{post['tag']}}",
             };
 
-            $('.paragraphs').find('.paragraph').each(function(index) {
-                if (index == 0) {
-                    paragraphs = $(this).find('textarea').val();
-                } else {
-                    paragraphs += ","+$(this).find('textarea').val();
-                }
-            });
+            paragraphs = $(".paragraph textArea").val().replace(/\n\s*\n/g, ',');
 
             if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'] !== paragraphs) {
                 $('button.update').removeClass('disabled');
@@ -101,23 +81,13 @@
                 $('button.update').addClass('disabled');
                 canUpdate = false;
             }
-            console.log(post['body'] === paragraphs);
         });
         $('button.btn-success').click(function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            var bodyParagraphs = $('.paragraphs').find('.paragraph');
-            var value = '';
-            bodyParagraphs.each(function(index) {
-                value = $(this).find('textarea').val();
-                if (index === 0) {
-                    paragraphs = value;
-                } else if (value) {
-                    paragraphs += ','+value;
-                }
-            });
-            if (paragraphs && $('select').val()) {
+            paragraphs = $(".paragraphs textArea").val().replace(/\n\s*\n/g, '\n').split("\n");
+            if (canUpdate && paragraphs && $('select').val()) {
                 $.ajax({
                     url: '{{ url_for('posts.update', id=post['_id']) }}',
                     data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val(),
