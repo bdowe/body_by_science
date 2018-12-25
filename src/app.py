@@ -15,7 +15,7 @@ from src.models.users.views import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/users")
 
 from src.models.posts.views import post_blueprint
-app.register_blueprint(post_blueprint, url_prefix="/posts")
+app.register_blueprint(post_blueprint, url_prefix="/resources")
 
 @app.before_first_request
 def initialize_database():
@@ -40,20 +40,6 @@ def contact():
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
-
-@app.route('/resources', methods=['GET'])
-def resources():
-    posts = list(reversed(list(Post.getAll())))
-    tags = list(Post.getAllTags())
-    for i in range(len(tags)):
-        tags[i] = tags[i]['tag']
-    return render_template('resources.html', posts=posts, tags=tags)
-
-@app.route('/resource/<id>', methods=['GET'])
-def resource(id):
-    post = Post.getOneById(id)
-    if post:
-        return render_template('resource.html', post=post)
 
 @app.route('/submit-contact-form', methods=['POST'])
 def submitContactForm():

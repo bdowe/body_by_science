@@ -1,3 +1,8 @@
+.resource {
+  background-color: #FFF;
+  height: 700px;
+  min-height: 700px;
+}
 .resource .container h1 {
   text-align: center;
   margin-top: 25px;
@@ -5,4 +10,24 @@
 .resource .container .paragraph {
   max-width: 500px;
   margin: 20px auto;
+}
+.resource .btn {
+  display: inline-block;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-align: center;
+  margin: 0 auto;
+  min-width: 120px;
+  background-color: #0B172A;
+  opacity: 0.8;
+  transition: all 0.1s ease;
+  color: #FFF;
+}
+.resource .btn:hover {
+  cursor: pointer;
+  opacity: 1;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

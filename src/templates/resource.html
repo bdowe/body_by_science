@@ -7,6 +7,9 @@
         {% for paragraph in post['body'] %}
             <div class="paragraph">{{ paragraph }}</div>
         {% endfor %}
+        {% if isAdmin %}
+            <a href="{{ url_for('posts.update', id=post['_id']) }}"><button class="btn btn-success update disabled">Edit post</button></a>
+        {% endif %}
     </div>
 </div>
 

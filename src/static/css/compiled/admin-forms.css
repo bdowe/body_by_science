@@ -1,12 +1,21 @@
 .add-post,
+.edit-post,
 .add-tag,
 .login {
   background-color: #F6F9FC;
   padding-top: 100px;
 }
 .add-post h1,
+.edit-post h1,
 .add-tag h1,
 .login h1 {
   text-align: center;
   color: #0B172A;
+}
+.add-post button.disabled,
+.edit-post button.disabled,
+.add-tag button.disabled,
+.login button.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }

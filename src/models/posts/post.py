@@ -19,6 +19,17 @@ class Post(object):
         return False
 
     @staticmethod
+    def update(post_id, title, description, body, tag):
+        email = session['email']
+        if title and description and email and body:
+            body = body.split(',')
+            user = User.getByEmail(email)
+            Database.update('posts', {'_id': ObjectId(post_id)}, {'_id': ObjectId(post_id), 'title': title, 'description': description, 'body': body, "tag": tag,
+                                      'timestamp': datetime.datetime.now(), 'user_id': user['_id']})
+            return True
+        return False
+
+    @staticmethod
     def getOneById(post_id):
         if post_id:
             return Database.find_one('posts', {'_id': ObjectId(post_id)})

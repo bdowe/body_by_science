@@ -24,7 +24,7 @@
 
             if ($('input').val()) {
                 $.ajax({
-                    url: '{{ url_for('posts.insertTag') }}',
+                    url: '{{ url_for('posts.addTag') }}',
                     data: $('#add-tag-form').serialize(),
                     type: 'POST',
                     beforeSend: function() {
@@ -32,7 +32,7 @@
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            window.location.href = "{{ url_for('users.profile') }}";
+                            window.location.href = "{{ url_for('posts.all') }}";
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create tag');
