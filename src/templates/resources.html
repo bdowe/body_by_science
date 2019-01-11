@@ -9,7 +9,10 @@
             <div class="filter filter-header" data-value="all">Topics:</div>
             <div class="filters">
                 {% for tag in tags %}
-                    <div class="filter" data-value="{{ tag }}"><span>{{ tag }}</span></div>
+                    <div class="filter" data-value="{{ tag }}">
+                        <div class="checkmark"></div>
+                        <span>{{ tag }}</span>
+                    </div>
                 {% endfor %}
             </div>
         </div>

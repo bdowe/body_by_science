@@ -7,6 +7,7 @@
   flex-basis: auto;
   position: relative;
   width: 25%;
+  margin-top: 40px;
   padding-top: 50px;
   background-color: #E24343;
 }
@@ -26,11 +27,13 @@
 }
 .resources .page-form .container .filters {
   text-align: left;
+  max-width: 200px;
 }
 .resources .page-form .container .filters .filter {
   font-size: 18px;
   margin-bottom: 10px;
   color: #FFF;
+  position: relative;
 }
 .resources .page-form .container .filters .filter span {
   padding: 5px 5px 5px 0;
@@ -38,13 +41,29 @@
 .resources .page-form .container .filters .filter:hover {
   cursor: pointer;
 }
-.resources .page-form .container .filters .filter.selected span {
-  border-bottom: 1px solid #F6F9FC;
+.resources .page-form .container .filters .filter.selected .checkmark {
+  display: block;
+}
+.resources .page-form .container .filters .filter .checkmark {
+  display: none;
+  position: absolute;
+  left: -15px;
+  top: 5px;
+  border-bottom: 2px solid #FFF;
+  border-right: 2px solid #FFF;
+  height: 10px;
+  width: 5px;
+  -ms-transform: rotate(45deg);
+  /* IE 9 */
+  -webkit-transform: rotate(45deg);
+  /* Safari */
+  transform: rotate(45deg);
 }
 .resources .posts {
   flex-basis: auto;
   width: 75%;
   position: relative;
+  margin-top: 40px;
 }
 .resources .posts .container {
   display: flex;
