@@ -157,17 +157,17 @@
 .about .cta.contact .btn-cta a {
   color: #1B264F;
 }
-.about .cta.resources {
+.about .cta.cta-resources {
   background-color: #F6F9FC;
 }
-.about .cta.resources .text {
+.about .cta.cta-resources .text {
   color: #1B264F;
 }
-.about .cta.resources .link-cta {
+.about .cta.cta-resources .link-cta {
   color: #BC4123;
   padding-bottom: 2px;
   display: inline;
 }
-.about .cta.resources .link-cta:hover {
+.about .cta.cta-resources .link-cta:hover {
   border-bottom: 1px solid #BC4123;
 }

@@ -6,22 +6,12 @@
     <h4 class="error hidden"></h4>
     <div class="page-form">
         <div class="container">
-            <form id="search-posts">
-                <!--<div class="form-group">-->
-                    <!--<label for="input-tag">Search</label>-->
-                    <!--<input type="text" id="input-tag" class="form-control" name="input-tag">-->
-                <!--</div>-->
-                <div class="form-group tag-search">
-                    <label for="select-tag">Filter by category</label>
-                    <select id="select-tag" class="form-control" name="select-tag">
-                        <option value="0"></option>
-                        {% for tag in tags %}
-                            <option value="{{ tag }}">{{ tag }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <!--<button type="submit" class="btn btn-success">Search</button>-->
-            </form>
+            <div class="filter filter-header" data-value="all">Topics:</div>
+            <div class="filters">
+                {% for tag in tags %}
+                    <div class="filter" data-value="{{ tag }}"><span>{{ tag }}</span></div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="posts">
@@ -31,8 +21,12 @@
                 <div class="post">
                     <a href="{{ url_for('posts.view', id=post['_id']) }}">
                         <div class="content">
-                            <div class="title"><h4>{{ post['title'] }}</h4></div>
-                            <div class="description">{{ post['description'] }}</div>
+                            <div class="top">
+                                <div class="title"><h4>{{ post['title'] }}</h4></div>
+                            </div>
+                            <div class="bottom">
+                                <div class="description">{{ post['description'] }}</div>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -48,17 +42,23 @@
         $('.posts .container').empty();
         var postDiv;
         var content;
+        var top;
         var title;
+        var bottom;
         var description;
         var contentContainer;
         posts.forEach((post) => {
             postDiv = $('<div>').addClass('post');
             contentContainer = $('<a>').attr('href', '/resources/'+post['_id'])
             content = $('<div>').addClass('content');
+            top = $('<div>').addClass('top');
             title = $('<div>').addClass('title').html('<h4>'+post['title']+'</h4>');
+            bottom = $('<div>').addClass('bottom');
             description = $('<div>').addClass('description').html(post['description']);
-            title.appendTo(content);
-            description.appendTo(content);
+            top.appendTo(content);
+            title.appendTo(top);
+            bottom.appendTo(content);
+            description.appendTo(bottom);
             content.appendTo(contentContainer);
             contentContainer.appendTo(postDiv);
             postDiv.appendTo($('.posts .container'));
@@ -102,15 +102,16 @@
 
         });
 
-        $('select').on('change', function(e) {
+        $('.filter').on('click', function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            if ($(this).val()) {
-                $('input').val('');
+            var el = $(this);
+            if (el.data('value')) {
+                $('.filter').removeClass('selected');
                 $.ajax({
                     url: '{{ url_for('posts.search') }}',
-                    data: "select-tag="+$('select').val(),
+                    data: "select-tag="+el.data('value'),
                     type: 'POST',
                     beforeSend: function() {
                         $('.overlay').removeClass('hidden');
@@ -118,7 +119,9 @@
                     success: function(response) {
                         if (response.status === 'OK') {
                             console.log(response);
+                            console.log($(this));
                             renderPosts(response.posts);
+                            el.addClass('selected');
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create post');
@@ -132,7 +135,7 @@
                         $('.overlay').addClass('hidden');
                     }
                 });
-            } else if ($('input').val() === "") {
+            } else if ($(this).data('value') === "") {
                 $('.error').removeClass('hidden');
                 $('.error').text('Error: no tag selected');
             }

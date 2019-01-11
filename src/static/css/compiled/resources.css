@@ -1,27 +1,49 @@
 .resources {
   background-color: #FFF;
   min-height: 700px;
+  display: flex;
 }
 .resources .page-form {
+  flex-basis: auto;
+  position: relative;
+  width: 25%;
   padding-top: 50px;
+  background-color: #E24343;
 }
 .resources .page-form .container {
   padding: 15px 50px 40px;
-  background-color: #0B172A;
-  opacity: 0.95;
+  position: fixed;
 }
-.resources .page-form .container form .form-group.tag-search {
-  border: none;
-}
-.resources .page-form .container form .form-group.tag-search label {
+.resources .page-form .container .filter-header {
   color: #F6F9FC;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
-.resources .page-form .container form .form-group.tag-search select {
-  background-color: #F6F9FC;
-  color: #0B172A;
+.resources .page-form .container .filter-header.filter {
+  font-size: 18px;
+}
+.resources .page-form .container .filter-header.filter:hover {
+  cursor: pointer;
+}
+.resources .page-form .container .filters {
+  text-align: left;
+}
+.resources .page-form .container .filters .filter {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #FFF;
+}
+.resources .page-form .container .filters .filter span {
+  padding: 5px 5px 5px 0;
+}
+.resources .page-form .container .filters .filter:hover {
+  cursor: pointer;
+}
+.resources .page-form .container .filters .filter.selected span {
+  border-bottom: 1px solid #F6F9FC;
 }
 .resources .posts {
+  flex-basis: auto;
+  width: 75%;
   position: relative;
 }
 .resources .posts .container {
@@ -30,7 +52,7 @@
 }
 .resources .posts .container .post {
   flex-basis: auto;
-  width: 25%;
+  width: 33.3%;
   height: 200px;
   padding: 10px;
 }
@@ -38,20 +60,32 @@
   text-decoration: none;
 }
 .resources .posts .container .post a .content {
-  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   height: 100%;
   width: 100%;
-  padding: 20px 5px;
-  background-color: #0B172A;
+}
+.resources .posts .container .post a .content .top {
+  background-color: #FAFAFA;
+  padding: 10px 5px;
+  color: #0B172A;
+  height: 50%;
+}
+.resources .posts .container .post a .content .bottom {
+  background-color: #06263C;
+  padding: 5px;
   color: #F6F9FC;
-  opacity: 0.9;
+  height: 50%;
 }
 .resources .posts .container .post a .content .title {
   text-align: center;
+  color: #E24343;
+  font-size: 16px;
 }
 .resources .posts .container .post a .content .description {
   text-align: center;
   margin-top: 20px;
+  color: #748E9E;
+  font-size: 16px;
 }

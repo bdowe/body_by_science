@@ -79,12 +79,10 @@ def update(id):
 
 
 @post_blueprint.route('/search/', methods=['POST'])
-@user_decorators.requires_login(return_user=False)
 def search():
     input_tag = request.form['input-tag'] if 'input-tag' in request.form else None
     select_tag = request.form['select-tag'] if 'select-tag' in request.form else None
     tag = None
-    user_id = User.getByEmail(session['email'])['_id']
     status = "No Good"
     message = "Error: search failed"
     try:
@@ -92,8 +90,7 @@ def search():
             tag = input_tag
         elif select_tag is not None:
             tag = select_tag
-
-        if tag is not None and tag is not "0":
+        if tag is not None and tag != "all":
             posts = list(reversed(list(Post.getManyByTag(tag))))
         else:
             posts = list(reversed(list(Post.getAll())))
@@ -103,7 +100,7 @@ def search():
             message = "Success!!!"
             for post in posts:
                 post['_id'] = str(post['_id'])
-                post['user_id'] = str(user_id)
+                post['user_id'] = str(post['user_id'])
         return jsonify({"status": status, "message": message, "posts": posts, "timestamp": datetime.datetime.now()})
     except PostErrors.PostError as e:
         return e.message
