@@ -61,5 +61,6 @@ def submitContactForm():
 
 
 app.add_template_global(jsonify, name='jsonify')
+app.add_template_global(len, name='len')
 app.add_template_global(json.dumps, name='jsonDumps')
 app.add_template_global(json.loads, name='jsonLoads')

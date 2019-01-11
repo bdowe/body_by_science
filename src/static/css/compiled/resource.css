@@ -1,17 +1,33 @@
-.resource {
+.resource-page {
   background-color: #FFF;
-  height: 700px;
   min-height: 700px;
+  padding: 50px 70px;
 }
-.resource .container h1 {
+.resource-page .resource {
+  padding: 10px 0 0;
+  margin-top: 30px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.resource-page .resource h1 {
   text-align: center;
-  margin-top: 25px;
+  margin: 25px 0;
+  color: #E24343;
 }
-.resource .container .paragraph {
-  max-width: 500px;
-  margin: 20px auto;
+.resource-page .resource .paragraph {
+  padding: 30px;
+  font-size: 18px;
 }
-.resource .btn {
+.resource-page .resource .paragraph.odd {
+  background-color: #06263C;
+  color: #F6F9FC;
+}
+.resource-page .resource .paragraph.even {
+  background-color: #F6F9FC;
+  color: #06263C;
+}
+.resource-page .btn {
   display: inline-block;
   outline: none;
   padding: 10px 20px;
@@ -24,7 +40,7 @@
   transition: all 0.1s ease;
   color: #FFF;
 }
-.resource .btn:hover {
+.resource-page .btn:hover {
   cursor: pointer;
   opacity: 1;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

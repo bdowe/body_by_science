@@ -1,15 +1,29 @@
-.resource {
+.resource-page {
     background-color: #FFF;
-    height: 700px;
     min-height: 700px;
-    .container {
+    padding: 50px 70px;
+    .resource {
+        padding: 10px 0 0;
+        margin-top: 30px;
+        -webkit-box-shadow:0 0 15px rgba(0, 0, 0, 0.6);
+        -moz-box-shadow:0 0 15px rgba(0, 0, 0, 0.6);
+        box-shadow:0 0 10px rgba(0, 0, 0, 0.6);
         h1 {
             text-align: center;
-            margin-top: 25px;
+            margin: 25px 0;
+            color: #E24343;
         }
         .paragraph {
-            max-width: 500px;
-            margin: 20px auto;
+            padding: 30px;
+            font-size: 18px;
+            &.odd {
+                background-color: #06263C;
+                color: #F6F9FC;
+            }
+            &.even {
+                background-color: #F6F9FC;
+                color: #06263C;
+            }
         }
     }
     .btn {
