@@ -21,14 +21,6 @@
 
 <script src="{{ url_for('static', filename='js/slick/slick.min.js') }}"></script>
 <script>
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 1){
-            $('.header').addClass("sticky");
-        } else{
-            $('.header').removeClass("sticky");
-        }
-    });
-
     $('.slides').slick({
 		fade: true,
 		autoplay: true,
