@@ -53,6 +53,7 @@ def new():
 @user_decorators.requires_admin_permissions(return_user=False)
 def update(id):
     post = Post.getOneById(id)
+    print(post)
     post['body'] = ','.join(post['body'])
     tags = list(Post.getAllTags())
     for i in range(len(tags)):

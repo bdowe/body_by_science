@@ -5,9 +5,10 @@
     <div class="resource">
         <h1>{{ post['title'] }}</h1>
         {% for i in range(len(post['body'])) %}
-            <div class="paragraph {{ 'even' if i % 2 == 0 else 'odd'}} ">{{ post['body'][i] }}</div>
+            <div class="paragraph {{ 'even' if i % 2 == 0 else 'odd'}} ">{{ post['body'][i].replace(';', ',') }}</div>
         {% endfor %}
         {% if isAdmin %}
+            <a href="{{ url_for('posts.update', id=post['_id']) }}"><button class="btn btn-success update disabled">Edit post</button></a>
             <a href="{{ url_for('posts.update', id=post['_id']) }}"><button class="btn btn-success update disabled">Edit post</button></a>
         {% endif %}
     </div>

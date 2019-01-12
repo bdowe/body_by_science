@@ -40,7 +40,9 @@
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            paragraphs = $(".paragraphs textArea").val().replace(/\n\s*\n/g, '\n').split("\n");
+            paragraphs = $(".paragraphs textArea").val();
+            paragraphs = paragraphs.replace(/,/g, ';');
+            paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
             if (paragraphs && $('select').val()) {
                 $.ajax({
                     url: '{{ url_for('posts.new') }}',

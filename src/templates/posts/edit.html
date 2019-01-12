@@ -15,7 +15,7 @@
         </div>
         <div class="form-group paragraphs">
             <label for="body">Body</label>
-            <textarea id="body" class="form-control" name="body">{{ '\n\n'.join(post['body'].split(',')) }}</textarea>
+            <textarea id="body" class="form-control" name="body">{{ ('\n\n'.join(post['body'].split(','))).replace(';', ',') }}</textarea>
         </div>
         <div class="form-group">
             <label for="tag">Tag</label>
@@ -36,57 +36,46 @@
 
 </div>
 <script type="text/javascript">
+    function checkIfCanUpdate() {
+        var canUpdate;
+        var paragraphs = $(".paragraphs textArea").val();
+        paragraphs = paragraphs.replace(/,/g, ';');
+        paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
+        var post = {
+            "title": "{{post['title']}}",
+            "description": "{{post['description']}}",
+            "body": "{{ jsonDumps(post['body']) }}",
+            "tag": "{{post['tag']}}",
+        };
+        post['body'] = post['body'].replace(/&#34;/g, '').split(',');
+
+        if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'].toString() !== paragraphs.toString()) {
+            $('button.update').removeClass('disabled');
+            canUpdate = true;
+        } else {
+            $('button.update').addClass('disabled');
+            canUpdate = false;
+        }
+        return canUpdate;
+    }
+
     $(document).ready(function() {
         var numParagraphs = 1;
         var paragraphs = '';
         var canUpdate = false;
         $("input, textarea").keyup(function(){
-            var post = {
-                "title": "{{post['title']}}",
-                "description": "{{post['description']}}",
-                "body": "{{post['body']}}",
-                "tag": "{{post['tag']}}",
-            };
-
-            $('.paragraphs').find('.paragraph').each(function(index) {
-                if (index == 0) {
-                    paragraphs = $(this).find('textarea').val();
-                } else {
-                    paragraphs += ","+$(this).find('textarea').val();
-                }
-            });
-
-            if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'] !== paragraphs) {
-                $('button.update').removeClass('disabled');
-                canUpdate = true;
-            } else {
-                $('button.update').addClass('disabled');
-                canUpdate = false;
-            }
+            canUpdate = checkIfCanUpdate();
         });
         $('select').change(function(e) {
-            var post = {
-                "title": "{{post['title']}}",
-                "description": "{{post['description']}}",
-                "body": "{{post['body']}}",
-                "tag": "{{post['tag']}}",
-            };
-
-            paragraphs = $(".paragraph textArea").val().replace(/\n\s*\n/g, ',');
-
-            if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'] !== paragraphs) {
-                $('button.update').removeClass('disabled');
-                canUpdate = true;
-            } else {
-                $('button.update').addClass('disabled');
-                canUpdate = false;
-            }
+            canUpdate = checkIfCanUpdate();
         });
         $('button.btn-success').click(function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            paragraphs = $(".paragraphs textArea").val().replace(/\n\s*\n/g, '\n').split("\n");
+            paragraphs = $(".paragraphs textArea").val();
+            paragraphs = paragraphs.replace(/,/g, ';');
+            paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
             if (canUpdate && paragraphs && $('select').val()) {
                 $.ajax({
                     url: '{{ url_for('posts.update', id=post['_id']) }}',
