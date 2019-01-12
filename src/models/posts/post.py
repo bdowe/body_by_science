@@ -30,6 +30,13 @@ class Post(object):
         return False
 
     @staticmethod
+    def delete(post_id):
+        if post_id:
+            return Database.remove('posts', {'_id': ObjectId(post_id)})
+        return False
+
+
+    @staticmethod
     def getOneById(post_id):
         if post_id:
             return Database.find_one('posts', {'_id': ObjectId(post_id)})
@@ -74,5 +81,12 @@ class Post(object):
     def addTag(cls, tag):
         if tag:
             Database.insert('tags', {'tag': tag})
+            return True
+        return False
+
+    @staticmethod
+    def deleteTag(tag):
+        if tag:
+            Database.remove('tags', {'tag': tag})
             return True
         return False

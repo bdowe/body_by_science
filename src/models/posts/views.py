@@ -1,5 +1,5 @@
 import src.models.posts.errors as PostErrors
-from flask import Blueprint, request, session, render_template, jsonify
+from flask import Blueprint, request, session, render_template, jsonify, url_for
 from src.models.posts.post import Post
 from src.models.users.user import User
 import src.models.users.decorators as user_decorators
@@ -78,6 +78,20 @@ def update(id):
     else:
         return render_template('posts/edit.html', post=post, tags=tags)
 
+@post_blueprint.route('/remove/<id>', methods=['GET'])
+@user_decorators.requires_admin_permissions(return_user=False)
+def delete(id):
+    status = "No Good"
+    message = "Error: could not delete post"
+    try:
+        post_deleted = Post.delete(id)
+        if post_deleted:
+            return redirect(url_for('posts.all'))
+        return jsonify({"status": status, "message": message, "timestamp": datetime.datetime.now()})
+    except PostErrors.PostError as e:
+        return e.message
+
+
 
 @post_blueprint.route('/search/', methods=['POST'])
 def search():
@@ -124,3 +138,16 @@ def addTag():
             return e.message
     else:
         return render_template('posts/add-tag.html')
+
+@post_blueprint.route('/remove-tag/<tag>', methods=['GET', 'POST'])
+@user_decorators.requires_admin_permissions(return_user=False)
+def deleteTag(tag):
+    status = "No Good"
+    message = "Error: could not delete post"
+    try:
+        tag_deleted = Post.deleteTag(tag)
+        if tag_deleted:
+            return redirect(url_for('posts.all'))
+        return jsonify({"status": status, "message": message, "timestamp": datetime.datetime.now()})
+    except PostErrors.PostError as e:
+        return e.message
