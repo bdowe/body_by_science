@@ -1,7 +1,6 @@
 import src.models.posts.errors as PostErrors
-from flask import Blueprint, request, session, render_template, jsonify, url_for
+from flask import Blueprint, request, render_template, jsonify, url_for
 from src.models.posts.post import Post
-from src.models.users.user import User
 import src.models.users.decorators as user_decorators
 from werkzeug.utils import redirect
 import datetime

@@ -1,0 +1,24 @@
+<div class="special">
+    I SEE YOU MINKY!!!!
+</div>
+<script>
+    $(document).ready(function(){
+        var secret = '38384040373937396665';
+        var input = "";
+        var timer;
+
+        $(document).keyup(function(e) {
+            input += e.which;
+            clearTimeout(timer);
+            timer = setTimeout(function() { input = ""; }, 1000);
+            check_input();
+        });
+
+        function check_input() {
+            if(input == secret) {
+                console.log('equal');
+                $('.special').addClass('visible');
+            }
+        };
+    });
+</script>

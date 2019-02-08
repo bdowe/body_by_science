@@ -5,17 +5,23 @@
         .flex-column {
             padding: 150px 40px 100px;
             &.contact-info {
+                padding-top: 200px;
                 flex-basis: auto;
                 width: 40%;
                 background-color: #0B172A;
                 color: #EBEBEB;
-                h2 {
-                    text-align: center;
-                }
-                .contact-subtext {
-                    margin-top: 25px;
-                    text-align: center;
-                    font-size: 18px;
+                .info-container {
+                    padding: 15px;
+                    border: 1px solid #BC4123;
+                    h2 {
+                        text-align: center;
+                        text-decoration: underline;
+                    }
+                    .contact-subtext:not(:first-child) {
+                        opacity: 1;
+                        margin-top: 25px;
+                        font-size: 18px;
+                    }
                 }
             }
             &.contact-form {

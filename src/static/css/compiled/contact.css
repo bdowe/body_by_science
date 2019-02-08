@@ -8,17 +8,23 @@
   padding: 150px 40px 100px;
 }
 .contact .flex-row .flex-column.contact-info {
+  padding-top: 200px;
   flex-basis: auto;
   width: 40%;
   background-color: #0B172A;
   color: #EBEBEB;
 }
-.contact .flex-row .flex-column.contact-info h2 {
-  text-align: center;
+.contact .flex-row .flex-column.contact-info .info-container {
+  padding: 15px;
+  border: 1px solid #BC4123;
 }
-.contact .flex-row .flex-column.contact-info .contact-subtext {
-  margin-top: 25px;
+.contact .flex-row .flex-column.contact-info .info-container h2 {
   text-align: center;
+  text-decoration: underline;
+}
+.contact .flex-row .flex-column.contact-info .info-container .contact-subtext:not(:first-child) {
+  opacity: 1;
+  margin-top: 25px;
   font-size: 18px;
 }
 .contact .flex-row .flex-column.contact-form {
