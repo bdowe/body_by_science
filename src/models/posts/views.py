@@ -30,15 +30,16 @@ def new():
         description = request.form['description']
         body = request.form['body'].strip()
         tag = request.form['tag']
+        videoURL = request.form['videoURL']
         status = "No Good"
         message = "Error: item not inserted"
         try:
-            post_added = Post.new(title, description, body, tag)
+            post_added = Post.new(title, description, body, tag, videoURL)
             if post_added:
                 status = "OK"
                 message = "Success!!!"
             return jsonify(
-                {"status": status, "message": message, "body": body, "tag": tag, "timestamp": datetime.datetime.now()})
+                {"status": status, "message": message, "body": body, "tag": tag, "videoURL": videoURL, "timestamp": datetime.datetime.now()})
         except PostErrors.PostError as e:
             return e.message
     else:
@@ -52,7 +53,6 @@ def new():
 @user_decorators.requires_admin_permissions(return_user=False)
 def update(id):
     post = Post.getOneById(id)
-    print(post)
     post['body'] = ','.join(post['body'])
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
@@ -62,16 +62,17 @@ def update(id):
         description = request.form['description']
         body = request.form['body']
         tag = request.form['tag']
+        videoURL = request.form['videoURL']
         status = "No Good"
         message = "Error: item not inserted"
 
         try:
-            post_updated = Post.update(id, title, description, body, tag)
+            post_updated = Post.update(id, title, description, body, tag, videoURL)
             if post_updated:
                 status = "OK"
                 message = "Success!!!"
             return jsonify(
-                {"status": status, "message": message, "body": body, "tag": tag, "timestamp": datetime.datetime.now()})
+                {"status": status, "message": message, "body": body, "tag": tag, "videoURL": videoURL, "timestamp": datetime.datetime.now()})
         except PostErrors.PostError as e:
             return e.message
     else:

@@ -29,6 +29,8 @@ body {
 }
 .error {
   display: block;
+  position: absolute;
+  margin-top: -20px;
   color: red;
 }
 .hidden {

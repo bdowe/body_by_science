@@ -9,22 +9,22 @@ from src.models.users.user import User
 
 class Post(object):
     @staticmethod
-    def new(title, description, body, tag):
+    def new(title, description, body, tag, videoURL):
         email = session['email']
-        if title and description and email and body and tag:
+        if title and description and email:
             body = body.split(',')
             user = User.getByEmail(email)
-            Database.insert('posts', {'title': title, 'description': description, 'body': body, "tag": tag, 'timestamp': datetime.datetime.now(), 'user_id': user['_id']})
+            Database.insert('posts', {'title': title, 'description': description, 'body': body, "tag": tag, "videoURL": videoURL, 'timestamp': datetime.datetime.now(), 'user_id': user['_id']})
             return True
         return False
 
     @staticmethod
-    def update(post_id, title, description, body, tag):
+    def update(post_id, title, description, body, tag, videoURL):
         email = session['email']
-        if post_id and title and description and email and body and tag:
+        if post_id and title and description and email:
             body = body.split(',')
             user = User.getByEmail(email)
-            Database.update('posts', {'_id': ObjectId(post_id)}, {'_id': ObjectId(post_id), 'title': title, 'description': description, 'body': body, "tag": tag,
+            Database.update('posts', {'_id': ObjectId(post_id)}, {'_id': ObjectId(post_id), 'title': title, 'description': description, 'body': body, "tag": tag, "videoURL": videoURL,
                                       'timestamp': datetime.datetime.now(), 'user_id': user['_id']})
             return True
         return False

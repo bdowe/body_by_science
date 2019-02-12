@@ -4,9 +4,16 @@
 <div class="resource-page">
     <div class="resource">
         <h1>{{ post['title'] }}</h1>
-        {% for i in range(len(post['body'])) %}
-            <div class="paragraph {{ 'even' if i % 2 == 0 else 'odd'}} ">{{ post['body'][i].replace(';', ',') }}</div>
-        {% endfor %}
+        {% if post['videoURL'] %}
+            <div class="video">
+                {{ post['videoURL']|safe }}
+            </div>
+        {% endif %}
+        {% if post['body'] %}
+            {% for i in range(len(post['body'])) %}
+                <div class="paragraph {{ 'even' if i % 2 == 0 else 'odd'}} ">{{ post['body'][i].replace(';', ',') }}</div>
+            {% endfor %}
+        {% endif %}
     </div>
     {% if isAdmin %}
         <a href="{{ url_for('posts.update', id=post['_id']) }}"><button class="btn btn-success update disabled">Edit</button></a>

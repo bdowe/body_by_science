@@ -27,6 +27,10 @@
                 {% endfor %}
             </select>
         </div>
+        <div class="form-group">
+            <label for="tag">Video URL</label>
+            <input id="videoURL" class="form-control" name="videoURL">
+        </div>
         <button type="submit" class="btn btn-success">Create</button>
     </form>
 </div>
@@ -43,10 +47,10 @@
             paragraphs = $(".paragraphs textArea").val();
             paragraphs = paragraphs.replace(/,/g, ';');
             paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
-            if (paragraphs && $('select').val()) {
+            if ($('#title').val() && $('#description').val()) {
                 $.ajax({
                     url: '{{ url_for('posts.new') }}',
-                    data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val(),
+                    data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val()+"&videoURL="+$('input#videoURL').val(),
                     type: 'POST',
                     beforeSend: function() {
                         $('.overlay').removeClass('hidden');
@@ -67,9 +71,6 @@
                         $('.overlay').addClass('hidden');
                     }
                 });
-            } else {
-                $('.error').removeClass('hidden');
-                $('.error').text('Error: Body and tag are required');
             }
         });
     });

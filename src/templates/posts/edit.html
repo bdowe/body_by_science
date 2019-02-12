@@ -30,6 +30,10 @@
                 {% endfor %}
             </select>
         </div>
+        <div class="form-group">
+            <label for="title">Video URL</label>
+            <input id="videoURL" class="form-control" name="videoURL" value="{{ post['videoURL'] }}">
+        </div>
         <button type="submit" class="btn btn-success update disabled">Update</button>
     </form>
 </div>
@@ -46,10 +50,11 @@
             "description": "{{post['description']}}",
             "body": "{{ jsonDumps(post['body']) }}",
             "tag": "{{post['tag']}}",
+            "videoURL": "{{post['videoURL']}}",
         };
         post['body'] = post['body'].replace(/&#34;/g, '').split(',');
 
-        if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'].toString() !== paragraphs.toString()) {
+        if (post['title'] !== $('#title').val() || post['description'] !== $('#description').val() || post['tag'] !== $('#tag').val() || post['body'].toString() !== paragraphs.toString() || post['videoURL'] !== $('#videoURL').val()) {
             $('button.update').removeClass('disabled');
             canUpdate = true;
         } else {
@@ -76,17 +81,17 @@
             paragraphs = $(".paragraphs textArea").val();
             paragraphs = paragraphs.replace(/,/g, ';');
             paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
-            if (canUpdate && paragraphs && $('select').val()) {
+            if (canUpdate && $('#title').val() && $('#description').val()) {
                 $.ajax({
                     url: '{{ url_for('posts.update', id=post['_id']) }}',
-                    data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val(),
+                    data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val()+"&videoURL="+$('input#videoURL').val(),
                     type: 'POST',
                     beforeSend: function() {
                         $('.overlay').removeClass('hidden');
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            window.location.href = "{{ url_for('posts.all') }}";
+                            window.location.href = "{{ url_for('posts.view', id=post['_id']) }}";
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create post');
