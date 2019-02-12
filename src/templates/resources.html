@@ -6,8 +6,12 @@
     <h4 class="error hidden"></h4>
     <div class="page-form">
         <div class="container">
-            <div class="filter filter-header" data-value="all">Topics:</div>
+            <div class="filter-header">Topics:</div>
             <div class="filters">
+                <div class="filter all selected" data-value="all">
+                    <div class="checkmark"></div>
+                    <span>All</span>
+                </div>
                 {% for tag in tags %}
                     <div class="filter" data-value="{{ tag }}">
                         <div class="checkmark"></div>

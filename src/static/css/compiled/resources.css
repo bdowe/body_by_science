@@ -44,6 +44,9 @@
 .resources .page-form .container .filters .filter.selected .checkmark {
   display: block;
 }
+.resources .page-form .container .filters .filter.all {
+  margin-bottom: 20px;
+}
 .resources .page-form .container .filters .filter .checkmark {
   display: none;
   position: absolute;
