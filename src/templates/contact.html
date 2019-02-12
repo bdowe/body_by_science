@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<h4 class="error hidden"></h4>
 <div class="contact">
     <div class="flex-row">
         <div class="overlay hidden"></div>
@@ -13,6 +12,7 @@
             </div>
         </div>
         <div class="flex-column contact-form">
+            <h4 class="error hidden"></h4>
             <h2>Have questions or requests, just ask!</h2>
             <form id="contact-form">
                 <div class="form-group">
@@ -35,33 +35,52 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        function validate() {
+            var isValid = true;
+            if ($('#name').val() === '' || $('#email').val() === '' || $('#message').val() === '') {
+                isValid = false;
+                $('.error').text("Please fill out all fields before submitting.");
+                $('.error').removeClass('hidden');
+            }
+
+            if ($('#email').val() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val()))) {
+                $('.error').text("Please enter a valid email address.");
+                $('.error').removeClass('hidden');
+            }
+            return isValid;
+        }
+
         $('.btn').click(function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            $.ajax({
-                url: '{{ url_for("submitContactForm") }}',
-                data: $('form').serialize(),
-                type: 'POST',
-                beforeSend: function() {
-                    $('.overlay').removeClass('hidden');
-                },
-                success: function(response) {
-                    if (response.status === 'OK') {
-                        window.location.href = "{{ url_for('home') }}";
-                    } else {
+            var isValid = validate();
+            if (isValid) {
+                $.ajax({
+                    url: '{{ url_for("submitContactForm") }}',
+                    data: $('form').serialize(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        $('.overlay').removeClass('hidden');
+                    },
+                    success: function(response) {
+                        if (response.status === 'OK') {
+                            window.location.href = "{{ url_for('home') }}";
+                        } else {
+                            $('.error').removeClass('hidden');
+                            $('.error').text('Could not send email');
+                        }
+                    },
+                    error: function(error) {
                         $('.error').removeClass('hidden');
-                        $('.error').text('Could not send email');
+                        $('.error').text(error);
+                    },
+                    complete: function() {
+                        $('.overlay').addClass('hidden');
                     }
-                },
-                error: function(error) {
-                    $('.error').removeClass('hidden');
-                    $('.error').text(error);
-                },
-                complete: function() {
-                    $('.overlay').addClass('hidden');
-                }
-            });
+                });
+            }
         });
     });
 </script>
