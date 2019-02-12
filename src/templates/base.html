@@ -13,11 +13,11 @@
 </head>
 <body>
 {% include 'header.html' %}
-{% include 'special.html' %}
 {% block content %}
 
 {% endblock %}
 {% include 'footer.html' %}
+{% include 'special.html' %}
 
 
 <script src="{{ url_for('static', filename='js/slick/slick.min.js') }}"></script>

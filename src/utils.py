@@ -31,15 +31,18 @@ class Utils(object):
         """
         return pbkdf2_sha512.verify(password, hashed_password)
 
-    @staticmethod
-    def send_contact_message(name, email, body):
-        return requests.post(
-            Constants.URL,
-            auth=("api", Constants.API_KEY),
-            data={
-                "from": Constants.FROM,
-                "to": Constants.EMAIL,
-                "subject": "New message from Body By Science!",
-                "text": "Name: " + name + ", Email: " + email + ", message:" + body
-            }
-        )
+    @classmethod
+    def send_contact_message(cls, name, email, body):
+        valid = cls.email_is_valid(email)
+        if name and email and valid and body:
+            return requests.post(
+                Constants.URL,
+                auth=("api", Constants.API_KEY),
+                data={
+                    "from": Constants.FROM,
+                    "to": Constants.EMAIL,
+                    "subject": "New message from Body By Science!",
+                    "text": "Name: " + name + ", Email: " + email + ", message:" + body
+                }
+            )
+        return False

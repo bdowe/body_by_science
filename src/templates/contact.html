@@ -48,7 +48,7 @@
                 },
                 success: function(response) {
                     if (response.status === 'OK') {
-                        window.location.href = "{{ url_for('users.profile') }}";
+                        window.location.href = "{{ url_for('home') }}";
                     } else {
                         $('.error').removeClass('hidden');
                         $('.error').text('Could not send email');
