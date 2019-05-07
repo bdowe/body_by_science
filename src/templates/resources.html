@@ -89,6 +89,7 @@
                     success: function(response) {
                         if (response.status === 'OK') {
                             renderPosts(response.posts);
+                            window.scrollTo(0, 0);
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not complete search');
@@ -125,10 +126,9 @@
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            console.log(response);
-                            console.log($(this));
                             renderPosts(response.posts);
                             el.addClass('selected');
+                            window.scrollTo(0, 0);
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create post');

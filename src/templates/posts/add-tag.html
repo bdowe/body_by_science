@@ -32,7 +32,7 @@
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            window.location.href = "{{ url_for('posts.all') }}";
+                            window.location.href = "{{ url_for('posts.tagEditor') }}";
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create tag');

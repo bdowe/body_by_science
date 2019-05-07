@@ -53,6 +53,8 @@ def registerUser():
     password = request.form['password']
     status = "No Good"
     message = "An account with that email already exists"
+    if email not in app.config['ADMINS']:
+        return 'This email does not have admin priviliges'
     try:
         registered = User.register(email, password)
         if registered:

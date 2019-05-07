@@ -11,7 +11,7 @@
                 <ul class="dropdown-content hidden">
                     {% if isAdmin %}
                         <li><a href="{{ url_for('posts.new') }}">Create post</a></li>
-                        <li><a href="{{ url_for('posts.addTag') }}">Add tag</a></li>
+                        <li><a href="{{ url_for('posts.tagEditor') }}">Manage Tags</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('users.logoutUser') }}">Log out</a></li>
                 </ul>

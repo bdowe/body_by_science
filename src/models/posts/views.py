@@ -120,6 +120,15 @@ def search():
     except PostErrors.PostError as e:
         return e.message
 
+
+@post_blueprint.route('/tag-editor/', methods=['GET'])
+@user_decorators.requires_admin_permissions(return_user=False)
+def tagEditor():
+    tags = list(Post.getAllTags())
+    for i in range(len(tags)):
+        tags[i] = tags[i]['tag']
+    return render_template('posts/tag-editor.html', tags=tags)
+
 @post_blueprint.route('/add-tag/', methods=['GET', 'POST'])
 @user_decorators.requires_admin_permissions(return_user=False)
 def addTag():
@@ -139,15 +148,17 @@ def addTag():
     else:
         return render_template('posts/add-tag.html')
 
-@post_blueprint.route('/remove-tag/<tag>', methods=['GET', 'POST'])
+@post_blueprint.route('/remove-tag/', methods=['POST'])
 @user_decorators.requires_admin_permissions(return_user=False)
-def deleteTag(tag):
+def deleteTag():
     status = "No Good"
     message = "Error: could not delete post"
+    tag = request.form['tag']
     try:
         tag_deleted = Post.deleteTag(tag)
         if tag_deleted:
-            return redirect(url_for('posts.all'))
+            status = 'OK'
+            message = 'Sucess!!!'
         return jsonify({"status": status, "message": message, "timestamp": datetime.datetime.now()})
     except PostErrors.PostError as e:
         return e.message

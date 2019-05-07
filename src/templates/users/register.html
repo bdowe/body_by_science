@@ -1,24 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<h4 class="error hidden"></h4>
-<div class="container page-form">
-    <div class="overlay hidden"></div>
-    {% if not session['email'] %}
-        <form id="register-form">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" id="email" class="form-control" name="email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" name="password">
-            </div>
-            <button type="submit" class="btn btn-success">Sign up</button>
-        </form>
-    {% else %}
-        <h1>You're already logged in!</h1>
-        <a href="{{ url_for('users.logoutUser') }}">Log out</a>
-    {% endif %}
+<div class="register">
+    <h4 class="error hidden"></h4>
+    <div class="container page-form">
+        <div class="overlay hidden"></div>
+        {% if not session['email'] %}
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-success">Sign up</button>
+            </form>
+        {% else %}
+            <h1>You're already logged in!</h1>
+            <a href="{{ url_for('users.logoutUser') }}">Log out</a>
+        {% endif %}
+    </div>
 </div>
 
 <script type="text/javascript">

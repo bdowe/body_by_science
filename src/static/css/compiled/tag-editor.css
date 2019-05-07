@@ -1,0 +1,24 @@
+.tag-editor {
+  padding: 70px 50px 30px;
+  background-color: #FFF;
+}
+.tag-editor h1 {
+  color: #0B172A;
+}
+.tag-editor .tags {
+  width: 300px;
+  padding: 10px;
+}
+.tag-editor .tags .tag {
+  padding: 15px 0;
+}
+.tag-editor .tags .tag:not(:first-child) {
+  border-top: 1px solid #BC4123;
+}
+.tag-editor .tags button {
+  float: right;
+  margin-top: -7px;
+}
+.tag-editor .add-tag-link {
+  margin-top: 30px;
+}

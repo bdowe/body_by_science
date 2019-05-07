@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="tag-editor">
+    <h4 class="error hidden"></h4>
+    <h1>Tag Editor</h1>
+    <div class="tags">
+        {% for tag in tags %}
+        <div class="tag" data-value="{{ tag }}">
+            <span>{{ tag }}</span>
+            <button class="btn delete-tag">Delete</button>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="add-tag-link">
+        <a class="btn" href="{{ url_for('posts.addTag') }}">Add tag</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('button.delete-tag').click(function(e) {
+            e.preventDefault();
+            $('.error').addClass('hidden');
+            $('.error').text('');
+            let tag = $(this).parent().data('value');
+            console.log(tag);
+            $.ajax({
+                url: '{{ url_for('posts.deleteTag') }}',
+                data: 'tag='+tag,
+                type: 'POST',
+                beforeSend: function() {
+                    $('.overlay').removeClass('hidden');
+                },
+                success: function(response) {
+                    if (response.status === 'OK') {
+                        window.location.href = "{{ url_for('posts.tagEditor') }}";
+                    } else {
+                        $('.error').removeClass('hidden');
+                        $('.error').text('Could not delete tag');
+                    }
+                },
+                error: function(error) {
+                    $('.error').removeClass('hidden');
+                    $('.error').text(error);
+                },
+                complete: function() {
+                    $('.overlay').addClass('hidden');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

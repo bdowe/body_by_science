@@ -4,13 +4,25 @@
 }
 .home .jumbotron {
   /* The image used */
-  background-image: url("../../images/home_background.JPG");
+  background-image: url("../../images/home_hero.png");
   /* Full height */
   height: 800px;
   /* Center and scale the image nicely */
   background-position: left top;
   background-repeat: no-repeat;
   background-size: cover;
+  padding: 350px 0 20px;
+}
+.home .jumbotron .jumbotron-text {
+  margin: 0 auto;
+  width: 700px;
+  background-color: #FFF;
+  opacity: 0.8;
+  text-align: center;
+  padding: 30px;
+}
+.home .jumbotron .jumbotron-text h1 {
+  color: #1B264F;
 }
 .home .what-we-do {
   background-color: #0B172A;
