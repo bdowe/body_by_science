@@ -62,50 +62,58 @@
   /* Safari */
   transform: rotate(45deg);
 }
-.resources .posts {
+.resources .posts-container {
   flex-basis: auto;
   width: 75%;
   position: relative;
   margin-top: 50px;
 }
-.resources .posts .container {
+.resources .posts-container .container .posts-header {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #06263C;
+}
+.resources .posts-container .container .posts-header.hidden {
+  display: none;
+}
+.resources .posts-container .container .posts {
   display: flex;
   flex-wrap: wrap;
 }
-.resources .posts .container .post {
+.resources .posts-container .container .post {
   flex-basis: auto;
   width: 33.3%;
   height: 200px;
   padding: 10px;
 }
-.resources .posts .container .post a {
+.resources .posts-container .container .post a {
   text-decoration: none;
 }
-.resources .posts .container .post a .content {
+.resources .posts-container .container .post a .content {
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   height: 100%;
   width: 100%;
 }
-.resources .posts .container .post a .content .top {
+.resources .posts-container .container .post a .content .top {
   background-color: #FAFAFA;
   padding: 10px 5px;
   color: #BC4123;
   height: 50%;
 }
-.resources .posts .container .post a .content .bottom {
+.resources .posts-container .container .post a .content .bottom {
   background-color: #06263C;
   padding: 5px;
   color: #F6F9FC;
   height: 50%;
 }
-.resources .posts .container .post a .content .title {
+.resources .posts-container .container .post a .content .title {
   text-align: center;
   color: #E24343;
   font-size: 16px;
 }
-.resources .posts .container .post a .content .description {
+.resources .posts-container .container .post a .content .description {
   text-align: center;
   margin-top: 20px;
   color: #748E9E;

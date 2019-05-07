@@ -61,14 +61,24 @@
             }
         }
     }
-    .posts {
+    .posts-container {
         flex-basis: auto;
         width: 75%;
         position: relative;
         margin-top: 50px;
         .container {
-            display: flex;
-            flex-wrap: wrap;
+            .posts-header {
+                margin-bottom: 30px;
+                text-align: center;
+                color: #06263C;
+                &.hidden {
+                    display: none;
+                }
+            }
+            .posts {
+                display: flex;
+                flex-wrap: wrap;
+            }
             .post {
                 flex-basis: auto;
                 width: 33.3%;

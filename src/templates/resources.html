@@ -2,8 +2,6 @@
 {% block content %}
 
 <div class="resources">
-
-    <h4 class="error hidden"></h4>
     <div class="page-form">
         <div class="container">
             <div class="filter-header">Topics:</div>
@@ -21,9 +19,14 @@
             </div>
         </div>
     </div>
-    <div class="posts">
+    <div class="posts-container">
+        <h4 class="error hidden"></h4>
         <div class="overlay hidden"></div>
         <div class="container">
+            <div class="posts-header">
+                <h1>Browse our Professionally Curated Resources</h1>
+            </div>
+            <div class="posts">
             {% for post in posts %}
                 <div class="post">
                     <a href="{{ url_for('posts.view', id=post['_id']) }}">
@@ -38,6 +41,7 @@
                     </a>
                 </div>
             {% endfor %}
+            </div>
         </div>
     </div>
 
@@ -90,6 +94,7 @@
                         if (response.status === 'OK') {
                             renderPosts(response.posts);
                             window.scrollTo(0, 0);
+                            $('.posts-header').addClass('hidden');
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not complete search');
@@ -129,6 +134,7 @@
                             renderPosts(response.posts);
                             el.addClass('selected');
                             window.scrollTo(0, 0);
+                            $('.posts-header').addClass('hidden');
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text('Could not create post');
