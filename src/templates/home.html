@@ -39,6 +39,17 @@
             </div>
         </div>
     </div>
+    <div class="container email-subscription">
+        <div class="text">Interested? Subscribe to our mailing list for more information</div>
+        <form id="email-subscription-form">
+            <div class="form-group">
+                <input type="email" id="email" class="form-control" name="email" placeholder="Email address">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+            <h4 class="error hidden"></h4>
+        </form>
+        <div class="email-subscription-success-message"></div>
+    </div>
     <div class="container what-we-do">
         <div class="grid">
             <figure class="effect-chico">
@@ -78,4 +89,52 @@
         <div class="btn-cta"><a href="{{ url_for('about') }}">Click here!</a></div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+        function validateEmail() {
+            let isValid = true;
+            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email', $('form#email-subscription-form')).val()))) {
+                $('.error').text("Please enter a valid email address.");
+                $('.error').removeClass('hidden');
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        $('button', $('form#email-subscription-form')).click(function(e) {
+            e.preventDefault();
+            $('.error').addClass('hidden');
+            $('.error').text('');
+            let isValid = validateEmail();
+            if (isValid) {
+                $.ajax({
+                    url: '{{ url_for('email_subscriptions.subscribe') }}',
+                    data: $('form#email-subscription-form').serialize(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        $('.overlay').removeClass('hidden');
+                    },
+                    success: function(response) {
+                        if (response.status === 'OK') {
+                            $('.email-subscription-success-message').text('Thank you! You\'ve been successfully added to our mailing list!');
+                            $(this).parent().addClass('hidden');
+                        } else {
+                            $('.error').removeClass('hidden');
+                            $('.error').text('Could not process mailing list subscription');
+                        }
+                    },
+                    error: function(error) {
+                        $('.error').removeClass('hidden');
+                        $('.error').text(error);
+                    },
+                    complete: function() {
+                        $('.overlay').addClass('hidden');
+                    }
+                });
+            }
+
+        });
+    });
+</script>
 {% endblock %}

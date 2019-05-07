@@ -33,6 +33,76 @@
         }
     }
 
+    .email-subscription {
+        background-color: #BC4123;
+        .text {
+            color: #F6F9FC;
+            text-align: center;
+            font-size: 24px;
+        }
+        form {
+            padding: 30px 0;
+            display: flex;
+            position: relative;
+            .form-group {
+                flex-basis: auto;
+                width: 75%;
+                padding-right: 20px;
+                input {
+                    background-color: #F6F9FC;
+                    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                      color: #0B172A;
+                    }
+                    &::-moz-placeholder { /* Firefox 19+ */
+                      color: #0B172A;
+                    }
+                    &:-ms-input-placeholder { /* IE 10+ */
+                      color: #0B172A;
+                    }
+                    &:-moz-placeholder { /* Firefox 18- */
+                      color: #0B172A;
+                    }
+                }
+            }
+            button {
+                flex-basis: auto;
+                width: 25%;
+                height: 40px;
+                align-self: center;
+                vertical-align: middle
+                padding: 20px 50px;
+                background-color: #F6F9FC;
+                border: none;
+                color: #1B264F;
+                opacity: 1;
+                border-radius: 3px;
+                font-size: 18px;
+                -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                transition: all 0.2s ease;
+                &:hover {
+                    cursor: pointer;
+                    -webkit-box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+                    -moz-box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+                    box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+                    background-color: #1B264F;
+                    color: #F6F9FC;
+                }
+            }
+            .error {
+                top: auto;
+                bottom: 20px;
+                color: #F6F9FC;
+            }
+        }
+        .email-subscription-success-message {
+            color: #F6F9FC;
+            text-align: center;
+            font-size: 20px;
+        }
+    }
+
     /*Carousel Start*/
     .what-we-are {
         background-color: #F6F9FC;

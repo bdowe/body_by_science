@@ -17,6 +17,9 @@ app.register_blueprint(user_blueprint, url_prefix="/users")
 from src.models.posts.views import post_blueprint
 app.register_blueprint(post_blueprint, url_prefix="/resources")
 
+from src.models.email_subscriptions.views import email_subscription_blueprint
+app.register_blueprint(email_subscription_blueprint, url_prefix="/subscriptions")
+
 @app.before_first_request
 def initialize_database():
     Database.initialize()

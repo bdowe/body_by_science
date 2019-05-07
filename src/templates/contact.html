@@ -37,7 +37,7 @@
     $(document).ready(function() {
 
         function validate() {
-            var isValid = true;
+            let isValid = true;
             if ($('#name').val() === '' || $('#email').val() === '' || $('#message').val() === '') {
                 isValid = false;
                 $('.error').text("Please fill out all fields before submitting.");
@@ -45,6 +45,7 @@
             }
 
             if ($('#email').val() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val()))) {
+                isValid = false;
                 $('.error').text("Please enter a valid email address.");
                 $('.error').removeClass('hidden');
             }
