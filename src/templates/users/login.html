@@ -26,33 +26,54 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        function validate() {
+            let isValid = true;
+            if ($('#email').val() === '' || $('#password').val() === '') {
+                isValid = false;
+                $('.error').text("Please fill out all fields before submitting.");
+                $('.error').removeClass('hidden');
+            } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/.test($('#email').val()))) {
+                isValid = false;
+                $('.error').text("Please enter a valid email address.");
+                $('.error').removeClass('hidden');
+            } else if ($('#password').val().length < 6) {
+                isValid = false;
+                $('.error').text("Password must be at least 8 characters");
+                $('.error').removeClass('hidden');
+            }
+            return isValid;
+        }
+
         $('button').click(function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
-            $.ajax({
-                url: '{{ url_for("users.loginUser") }}',
-                data: $('form').serialize(),
-                type: 'POST',
-                beforeSend: function() {
-                    $('.overlay').removeClass('hidden');
-                },
-                success: function(response) {
-                    if (response.status === 'OK') {
-                        window.location.href = "{{ url_for('home') }}";
-                    } else {
+            let valid = validate();
+            if (valid) {
+                $.ajax({
+                    url: '{{ url_for("users.loginUser") }}',
+                    data: $('form').serialize(),
+                    type: 'POST',
+                    beforeSend: function() {
+                        $('.overlay').removeClass('hidden');
+                    },
+                    success: function(response) {
+                        if (response.status === 'OK') {
+                            window.location.href = "{{ url_for('home') }}";
+                        } else {
+                            $('.error').removeClass('hidden');
+                            $('.error').text('Could not log in');
+                        }
+                    },
+                    error: function(error) {
                         $('.error').removeClass('hidden');
-                        $('.error').text('Could not log in');
+                        $('.error').text(error);
+                    },
+                    complete: function() {
+                        $('.overlay').addClass('hidden');
                     }
-                },
-                error: function(error) {
-                    $('.error').removeClass('hidden');
-                    $('.error').text(error);
-                },
-                complete: function() {
-                    $('.overlay').addClass('hidden');
-                }
-            });
+                });
+            }
         });
     });
 </script>
