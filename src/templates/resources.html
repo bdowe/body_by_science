@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
     var renderPosts = function(posts) {
-        $('.posts .container').empty();
+        $('.posts').empty();
         var postDiv;
         var content;
         var top;
@@ -72,7 +72,7 @@
             description.appendTo(bottom);
             content.appendTo(contentContainer);
             contentContainer.appendTo(postDiv);
-            postDiv.appendTo($('.posts .container'));
+            postDiv.appendTo($('.posts'));
         });
     }
 
