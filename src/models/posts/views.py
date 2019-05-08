@@ -143,6 +143,10 @@ def addTag():
         tag = request.form['tag']
         status = "No Good"
         message = "Error: tag not inserted"
+
+        if not tag:
+            return {"status": status, "message": message}
+
         try:
             tag_added = Post.addTag(tag)
             if tag_added:
