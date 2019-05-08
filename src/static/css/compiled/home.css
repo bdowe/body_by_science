@@ -199,13 +199,9 @@
 .home .cta.about .btn-cta {
   background-color: #F6F9FC;
   margin-left: 15px;
+  color: #1B264F;
 }
 .home .cta.about .btn-cta:hover {
-  background-color: #1B264F;
-}
-.home .cta.about .btn-cta:hover a {
   color: #F6F9FC;
-}
-.home .cta.about .btn-cta a {
-  color: #1B264F;
+  background-color: #1B264F;
 }

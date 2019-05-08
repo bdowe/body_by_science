@@ -147,15 +147,11 @@
 .about .cta.contact .btn-cta {
   background-color: #F6F9FC;
   margin-left: 15px;
+  color: #1B264F;
 }
 .about .cta.contact .btn-cta:hover {
-  background-color: #BC4123;
-}
-.about .cta.contact .btn-cta:hover a {
   color: #F6F9FC;
-}
-.about .cta.contact .btn-cta a {
-  color: #1B264F;
+  background-color: #BC4123;
 }
 .about .cta.cta-resources {
   background-color: #F6F9FC;

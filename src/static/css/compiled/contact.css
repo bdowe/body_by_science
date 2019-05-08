@@ -37,3 +37,6 @@
   text-align: center;
   color: #0B172A;
 }
+.contact .flex-row .flex-column.contact-form .error {
+  margin-top: 10px;
+}
