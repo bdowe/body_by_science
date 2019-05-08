@@ -31,6 +31,7 @@
   color: #EBEBEB;
 }
 .home .email-subscription {
+  position: relative;
   background-color: #BC4123;
 }
 .home .email-subscription .text {
@@ -99,6 +100,10 @@
   color: #F6F9FC;
 }
 .home .email-subscription .email-subscription-success-message {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
   color: #F6F9FC;
   text-align: center;
   font-size: 20px;
