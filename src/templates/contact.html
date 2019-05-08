@@ -44,7 +44,7 @@
                 $('.error').removeClass('hidden');
             }
 
-            if ($('#email').val() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val()))) {
+            if ($('#email').val() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/.test($('#email').val()))) {
                 isValid = false;
                 $('.error').text("Please enter a valid email address.");
                 $('.error').removeClass('hidden');

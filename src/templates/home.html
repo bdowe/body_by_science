@@ -94,7 +94,7 @@
 
         function validateEmail() {
             let isValid = true;
-            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email', $('form#email-subscription-form')).val()))) {
+            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/.test($('#email', $('form#email-subscription-form')).val()))) {
                 $('.error').text("Please enter a valid email address.");
                 $('.error').removeClass('hidden');
                 isValid = false;
