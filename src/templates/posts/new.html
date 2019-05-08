@@ -21,7 +21,7 @@
         <div class="form-group">
             <label for="tag">Tag</label>
             <select id="tag" class="form-control" name="tag">
-                <option value="0"></option>
+                <option></option>
                 {% for tag in tags %}
                     <option value="{{ tag }}">{{ tag }}</option>
                 {% endfor %}
@@ -38,6 +38,14 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+        function validate() {
+            let valid = true;
+            if (!$('#title').val() || !$('#description').val() || !$('select#tag').val() || (!$(".paragraphs textArea").val() && !$("#videoURL").val())) {
+                valid = false;
+            }
+            return valid;
+        }
+
         var numParagraphs = 1;
         var paragraphs = '';
         $('button.btn-success').click(function(e) {
@@ -47,7 +55,8 @@
             paragraphs = $(".paragraphs textArea").val();
             paragraphs = paragraphs.replace(/,/g, ';');
             paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
-            if ($('#title').val() && $('#description').val()) {
+            let valid = validate();
+            if (valid) {
                 $.ajax({
                     url: '{{ url_for('posts.new') }}',
                     data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val()+"&videoURL="+$('input#videoURL').val(),
@@ -71,6 +80,9 @@
                         $('.overlay').addClass('hidden');
                     }
                 });
+            } else {
+                $('.error').removeClass('hidden');
+                $('.error').text('Please fill out all required fields');
             }
         });
     });

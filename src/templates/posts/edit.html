@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="edit-post container">Edit Post</h1>
+<div class="edit-post container">
     <h4 class="error hidden"></h4>
     <div class="page-form">
     <div class="overlay hidden"></div>
@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="tag">Tag</label>
             <select id="tag" class="form-control" name="tag">
-                <option value="0"></option>
+                <option></option>
                 {% for tag in tags %}
                     {% if tag == post['tag'] %}
                         <option value="{{ tag }}" selected>{{ tag }}</option>
@@ -64,6 +64,14 @@
         return canUpdate;
     }
 
+    function validate() {
+        let valid = true;
+        if (!$('#title').val() || !$('#description').val() || !$('select#tag').val() || (!$(".paragraphs textArea").val() && !$("#videoURL").val())) {
+            valid = false;
+        }
+        return valid;
+    }
+
     $(document).ready(function() {
         var numParagraphs = 1;
         var paragraphs = '';
@@ -81,7 +89,8 @@
             paragraphs = $(".paragraphs textArea").val();
             paragraphs = paragraphs.replace(/,/g, ';');
             paragraphs = paragraphs.replace(/\n\s*\n/g, '\n').split("\n");
-            if (canUpdate && $('#title').val() && $('#description').val()) {
+            let valid = validate() && canUpdate;
+            if (valid) {
                 $.ajax({
                     url: '{{ url_for('posts.update', id=post['_id']) }}',
                     data: "title="+$('input#title').val()+"&description="+$('textarea#description').val()+"&body="+paragraphs+"&tag="+$('select#tag').val()+"&videoURL="+$('input#videoURL').val(),
@@ -107,7 +116,7 @@
                 });
             } else {
                 $('.error').removeClass('hidden');
-                $('.error').text('Error: Body and tag are required');
+                $('.error').text('Please fill out all required fields');
             }
         });
     });

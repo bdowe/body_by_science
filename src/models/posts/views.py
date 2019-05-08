@@ -33,6 +33,10 @@ def new():
         videoURL = request.form['videoURL']
         status = "No Good"
         message = "Error: item not inserted"
+
+        if not title or not description or not tag or (not body and not videoURL):
+            return {"status": status, "message": message}
+
         try:
             post_added = Post.new(title, description, body, tag, videoURL)
             if post_added:
@@ -65,6 +69,9 @@ def update(id):
         videoURL = request.form['videoURL']
         status = "No Good"
         message = "Error: item not inserted"
+
+        if not title or not description or not tag or (not body and not videoURL):
+            return {"status": status, "message": message}
 
         try:
             post_updated = Post.update(id, title, description, body, tag, videoURL)
