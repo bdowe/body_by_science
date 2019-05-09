@@ -8,10 +8,15 @@ class EmailSubscription(object):
     def new(cls, email):
         if email:
             subscription = cls.getByEmail(email)
+            if subscription:
+                raise Exception('This email has already been registered')
+
             valid = Utils.email_is_valid(email)
-            if not subscription and valid:
-                Database.insert('email_subscriptions', {'email': email, 'timestamp': datetime.datetime.now()})
-                return True
+            if not valid:
+                raise Exception('Please enter a valid email address')
+
+            Database.insert('email_subscriptions', {'email': email, 'timestamp': datetime.datetime.now()})
+            return True
         return False
 
     @staticmethod

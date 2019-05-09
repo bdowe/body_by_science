@@ -121,12 +121,12 @@
                             $(this).parent().addClass('hidden');
                         } else {
                             $('.error').removeClass('hidden');
-                            $('.error').text('Could not process mailing list subscription');
+                            $('.error').text(response.message);
                         }
                     },
                     error: function(error) {
                         $('.error').removeClass('hidden');
-                        $('.error').text(error);
+                        $('.error').text('There was an error adding your email to our subscription list.');
                     },
                     complete: function() {
                         $('.overlay').addClass('hidden');

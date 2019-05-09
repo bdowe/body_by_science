@@ -15,6 +15,5 @@ def subscribe():
             status = "OK"
             message = "Success! Your email has been added to our subscription list!"
         return jsonify({"status": status, "message": message, "email": email})
-
     except Exception as e:
-        return "There was an error processing your subscription request."
+        return jsonify({"status": status, "message": str(e)})
