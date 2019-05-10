@@ -2,7 +2,6 @@
 {% block content %}
 <div class="contact">
     <div class="flex-row">
-        <div class="overlay hidden"></div>
         <div class="flex-column contact-info">
             <div class="info-container">
                 <div class="contact-subtext">Personalized Training Routines</div>
@@ -26,7 +25,7 @@
                     <label for="message">Message</label>
                     <textarea id="message" class="form-control" name="message"></textarea>
                 </div>
-                <div class="btn btn-success">Send</div>
+                <div class="btn btn-success">Submit</div>
             </form>
             <h4 class="error hidden"></h4>
         </div>
@@ -53,6 +52,7 @@
         }
 
         $('.btn').click(function(e) {
+            let self = $(this);
             e.preventDefault();
             $('.error').addClass('hidden');
             $('.error').text('');
@@ -63,22 +63,26 @@
                     data: $('form').serialize(),
                     type: 'POST',
                     beforeSend: function() {
-                        $('.overlay').removeClass('hidden');
+                        self.text('Processing');
+                        self.addClass('disabled');
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            window.location.href = "{{ url_for('home') }}";
+                            $('.contact-form h2').text('Thank You! Your message has been successfully submitted.');
+                            let form = $('.contact-form form');
+                            $('input, textarea', form).val('');
                         } else {
                             $('.error').removeClass('hidden');
-                            $('.error').text('Could not send email');
+                            $('.error').text(response.message);
                         }
                     },
                     error: function(error) {
                         $('.error').removeClass('hidden');
-                        $('.error').text(error);
+                        $('.error').text('There was an error submitting your message');
                     },
                     complete: function() {
-                        $('.overlay').addClass('hidden');
+                        self.text('Submit');
+                        self.removeClass('disabled');
                     }
                 });
             }

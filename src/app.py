@@ -50,17 +50,15 @@ def submitContactForm():
     email = request.form['email']
     body = request.form['message']
     status = "Error"
-    message = "Error: email not sent"
+    message = "There was a problem sending your message. Please try again later"
     try:
         email_sent = Utils.send_contact_message(name, email, body)
         if email_sent:
             status = "OK"
-            message = "Success! You have been logged in!"
-        else:
-            session['email'] = None
+            message = "Success! Your message has been sent"
         return jsonify({"status": status, "message": message, "email": email})
-    except Exception as e:
-        return message
+    except Exception:
+        return jsonify({"status": status, "message": message})
 
 
 app.add_template_global(jsonify, name='jsonify')
