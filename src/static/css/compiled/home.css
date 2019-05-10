@@ -54,27 +54,25 @@
 }
 .home .email-subscription form .form-group input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #0B172A;
+  color: #AAA;
 }
 .home .email-subscription form .form-group input::-moz-placeholder {
   /* Firefox 19+ */
-  color: #0B172A;
+  color: #AAA;
 }
 .home .email-subscription form .form-group input:-ms-input-placeholder {
   /* IE 10+ */
-  color: #0B172A;
+  color: #AAA;
 }
 .home .email-subscription form .form-group input:-moz-placeholder {
   /* Firefox 18- */
-  color: #0B172A;
+  color: #AAA;
 }
 .home .email-subscription form button {
   flex-basis: auto;
   width: 25%;
   height: 40px;
   align-self: center;
-  vertical-align: middle
-                padding: 20px 50px;
   background-color: #F6F9FC;
   border: none;
   color: #1B264F;
