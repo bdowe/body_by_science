@@ -131,26 +131,31 @@
                     },
                     success: function(response) {
                         if (response.status === 'OK') {
-                            renderPosts(response.posts);
                             el.addClass('selected');
                             window.scrollTo(0, 0);
-                            $('.posts-header').addClass('hidden');
+                            renderPosts(response.posts);
+                            if (response.posts.length === 0) {
+                                $('.posts-header').removeClass('hidden');
+                                $('.posts-header h1').text("We don't have any resources for this category right now! Please try another.");
+                            } else {
+                                $('.posts-header').addClass('hidden');
+                            }
                         } else {
                             $('.error').removeClass('hidden');
-                            $('.error').text('Could not create post');
+                            $('.error').text(response.message);
                         }
                     },
                     error: function(error) {
                         $('.error').removeClass('hidden');
-                        $('.error').text(error);
+                        $('.error').text("We're having trouble loading our resources right now! Please try again later.");
                     },
                     complete: function() {
                         $('.overlay').addClass('hidden');
                     }
                 });
-            } else if ($(this).data('value') === "") {
+            } else if (!$(this).data('value')) {
                 $('.error').removeClass('hidden');
-                $('.error').text('Error: no tag selected');
+                $('.error').text("We're having trouble loading our resources right now! Please try again later.");
             }
         });
     });

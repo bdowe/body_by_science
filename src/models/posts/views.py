@@ -106,7 +106,7 @@ def search():
     select_tag = request.form['select-tag'] if 'select-tag' in request.form else None
     tag = None
     status = "No Good"
-    message = "Error: search failed"
+    message = "We're having trouble loading our resources right now! Please try again later."
     try:
         if input_tag is not None:
             tag = input_tag
@@ -124,8 +124,8 @@ def search():
                 post['_id'] = str(post['_id'])
                 post['user_id'] = str(post['user_id'])
         return jsonify({"status": status, "message": message, "posts": posts, "timestamp": datetime.datetime.now()})
-    except PostErrors.PostError as e:
-        return e.message
+    except Exception:
+        return jsonify({"status": status, "message": message})
 
 
 @post_blueprint.route('/tag-editor/', methods=['GET'])

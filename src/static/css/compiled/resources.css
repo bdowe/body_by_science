@@ -68,6 +68,10 @@
   position: relative;
   margin-top: 50px;
 }
+.resources .posts-container .error {
+  margin-top: 15px;
+  margin-left: 15px;
+}
 .resources .posts-container .container .posts-header {
   margin-bottom: 30px;
   text-align: center;
