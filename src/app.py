@@ -34,15 +34,23 @@ def isAdmin():
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('home.html')
+    css = [
+        {'prefix': 'css/compiled/', 'name': 'home'},
+        {'prefix': 'js/slick/', 'name': 'slick-theme'},
+        {'prefix': 'js/slick/', 'name': 'slick'},
+        {'prefix': 'css/HoverEffectIdeas/css/', 'name': 'set1'}
+    ]
+    return render_template('home.html', css=css)
 
 @app.route('/contact', methods=['GET'])
 def contact():
-    return render_template('contact.html')
+    css = [{'prefix': 'css/compiled/', 'name': 'contact'}]
+    return render_template('contact.html', css=css)
 
 @app.route('/about', methods=['GET'])
 def about():
-    return render_template('about.html')
+    css = [{'prefix': 'css/compiled/', 'name': 'about'}]
+    return render_template('about.html', css=css)
 
 @app.route('/submit-contact-form', methods=['POST'])
 def submitContactForm():

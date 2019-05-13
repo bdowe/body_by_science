@@ -14,13 +14,15 @@ def all():
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
         tags[i] = tags[i]['tag']
-    return render_template('resources.html', posts=posts, tags=tags)
+    css = [{'prefix': 'css/compiled/', 'name': 'resources'}]
+    return render_template('resources.html', posts=posts, tags=tags, css=css)
 
 @post_blueprint.route('/<id>', methods=['GET'])
 def view(id):
     post = Post.getOneById(id)
     if post:
-        return render_template('resource.html', post=post)
+        css = [{'prefix': 'css/compiled/', 'name': 'resource'}]
+        return render_template('resource.html', post=post, css=css)
 
 @post_blueprint.route('/new/', methods=['GET', 'POST'])
 @user_decorators.requires_admin_permissions(return_user=False)
@@ -134,7 +136,8 @@ def tagEditor():
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
         tags[i] = tags[i]['tag']
-    return render_template('posts/tag-editor.html', tags=tags)
+    css = [{'prefix': 'css/compiled/', 'name': 'tag-editor'}]
+    return render_template('posts/tag-editor.html', tags=tags, css=css)
 
 @post_blueprint.route('/add-tag/', methods=['GET', 'POST'])
 @user_decorators.requires_admin_permissions(return_user=False)
