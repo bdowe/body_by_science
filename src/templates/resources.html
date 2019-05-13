@@ -42,6 +42,10 @@
                 </div>
             {% endfor %}
             </div>
+            <div class="pagination">
+                <a class="btn prev disabled" data-direction="prev">Previous</a>
+                <a class="btn next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-direction="next">Next</a>
+            </div>
         </div>
     </div>
 
@@ -77,6 +81,54 @@
     }
 
     $(document).ready(function() {
+        let page = 0;
+        let last_page = {{ last_page }};
+        let max_per_page = {{ max_per_page }};
+
+        $('.btn').click(function(e) {
+            e.preventDefault();
+            let self = $(this);
+            let tag = $('.filter.selected').data('value');
+            $.ajax({
+                url: '{{ url_for('posts.paginate') }}',
+                data: "direction="+self.data('direction')+"&page="+page+"&tag="+tag,
+                type: 'GET',
+                beforeSend: function() {
+                    $('.overlay').removeClass('hidden');
+                },
+                success: function(response) {
+                    if (response.status === 'OK') {
+                        renderPosts(response.posts);
+                        window.scrollTo(0, 0);
+                        $('.posts-header').addClass('hidden');
+                        page = response.page;
+
+                        if (page !== 0) {
+                            $('.btn.prev').removeClass('disabled');
+                        } else {
+                            $('.btn.prev').addClass('disabled');
+                        }
+
+                        if (page !== last_page) {
+                            $('.btn.next').removeClass('disabled');
+                        } else {
+                            $('.btn.next').addClass('disabled');
+                        }
+                    } else {
+                        $('.error').removeClass('hidden');
+                        $('.error').text(response.message);
+                    }
+                },
+                error: function(error) {
+                    $('.error').removeClass('hidden');
+                    $('.error').text(error);
+                },
+                complete: function() {
+                    $('.overlay').addClass('hidden');
+                }
+            });
+        });
+
         $('button').click(function(e) {
             e.preventDefault();
             $('.error').addClass('hidden');
@@ -86,7 +138,7 @@
                 $.ajax({
                     url: '{{ url_for('posts.search') }}',
                     data: "input-tag="+$('input').val(),
-                    type: 'POST',
+                    type: 'GET',
                     beforeSend: function() {
                         $('.overlay').removeClass('hidden');
                     },
@@ -125,7 +177,7 @@
                 $.ajax({
                     url: '{{ url_for('posts.search') }}',
                     data: "select-tag="+el.data('value'),
-                    type: 'POST',
+                    type: 'GET',
                     beforeSend: function() {
                         $('.overlay').removeClass('hidden');
                     },
@@ -134,11 +186,18 @@
                             el.addClass('selected');
                             window.scrollTo(0, 0);
                             renderPosts(response.posts);
+                            $('.btn.prev').addClass('disabled');
+                            page = 0;
                             if (response.posts.length === 0) {
                                 $('.posts-header').removeClass('hidden');
                                 $('.posts-header h1').text("We don't have any resources for this category right now! Please try another.");
                             } else {
                                 $('.posts-header').addClass('hidden');
+                                if (response.posts.length < max_per_page) {
+                                    $('.btn.next').addClass('disabled');
+                                } else {
+                                    $('.btn.next').removeClass('disabled');
+                                }
                             }
                         } else {
                             $('.error').removeClass('hidden');

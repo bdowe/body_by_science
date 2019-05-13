@@ -1,9 +1,12 @@
+import math
+
 import src.models.posts.errors as PostErrors
 from flask import Blueprint, request, render_template, jsonify, url_for
 from src.models.posts.post import Post
 import src.models.users.decorators as user_decorators
 from werkzeug.utils import redirect
 import datetime
+import src.models.posts.constants as POST_CONSTANTS
 
 post_blueprint = Blueprint('posts', __name__)
 
@@ -11,11 +14,13 @@ post_blueprint = Blueprint('posts', __name__)
 @post_blueprint.route('/', methods=['GET'])
 def all():
     posts = list(reversed(list(Post.getAll())))
+    last_page = math.floor(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+    posts = posts[:9]
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
         tags[i] = tags[i]['tag']
     css = [{'prefix': 'css/compiled/', 'name': 'resources'}]
-    return render_template('resources.html', posts=posts, tags=tags, css=css)
+    return render_template('resources.html', posts=posts, tags=tags, css=css, last_page=last_page, max_per_page=POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
 
 @post_blueprint.route('/<id>', methods=['GET'])
 def view(id):
@@ -102,10 +107,10 @@ def delete(id):
 
 
 
-@post_blueprint.route('/search/', methods=['POST'])
+@post_blueprint.route('/search/', methods=['GET'])
 def search():
-    input_tag = request.form['input-tag'] if 'input-tag' in request.form else None
-    select_tag = request.form['select-tag'] if 'select-tag' in request.form else None
+    input_tag = request.args['input-tag'] if 'input-tag' in request.args else None
+    select_tag = request.args['select-tag'] if 'select-tag' in request.args else None
     tag = None
     status = "No Good"
     message = "We're having trouble loading our resources right now! Please try again later."
@@ -119,15 +124,56 @@ def search():
         else:
             posts = list(reversed(list(Post.getAll())))
 
+        posts = posts[:POST_CONSTANTS.MAX_RESOURCES_PER_PAGE]
+
         if posts is not None:
             status = "OK"
             message = "Success!!!"
             for post in posts:
                 post['_id'] = str(post['_id'])
                 post['user_id'] = str(post['user_id'])
-        return jsonify({"status": status, "message": message, "posts": posts, "timestamp": datetime.datetime.now()})
+        return jsonify({"status": status, "message": message, "posts": posts})
     except Exception:
         return jsonify({"status": status, "message": message})
+
+@post_blueprint.route('/paginate/', methods=['GET'])
+def paginate():
+    direction = request.args['direction']
+    page = int(request.args['page'])
+    tag = request.args['tag']
+    status = 'No good'
+    message = "We're having trouble loading our resources right now! Please try again later."
+    try:
+        if tag is not None and tag != "all":
+            posts = list(reversed(list(Post.getManyByTag(tag))))
+        else:
+            posts = list(reversed(list(Post.getAll())))
+
+        last_page = math.floor(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+        if direction == 'next':
+            if page == last_page:
+                raise Exception('On the last page, cannot go forwards')
+            page += 1
+        elif direction == 'prev':
+            if page == 0:
+                raise Exception('On the first page, cannot go backwards')
+            page -= 1
+
+        first_index = page * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+        last_index = (page + 1) * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+        posts = posts[first_index:last_index]
+        if posts is not None:
+            status = "OK"
+            message = "Success!!!"
+            for post in posts:
+                post['_id'] = str(post['_id'])
+                post['user_id'] = str(post['user_id'])
+        return jsonify({"status": status, "message": message, "posts": posts, "page": page})
+    except Exception as e:
+        if len(str(e)) != 0:
+            message = str(e)
+        return jsonify({"status": status, "message": message})
+
 
 
 @post_blueprint.route('/tag-editor/', methods=['GET'])
