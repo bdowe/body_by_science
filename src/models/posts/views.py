@@ -14,13 +14,15 @@ post_blueprint = Blueprint('posts', __name__)
 @post_blueprint.route('/', methods=['GET'])
 def all():
     posts = list(reversed(list(Post.getAll())))
-    last_page = math.floor(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
-    posts = posts[:9]
+    last_page = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+    num_pages = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+    max_pages_shown = POST_CONSTANTS.MAX_PAGES_SHOWN if num_pages >= POST_CONSTANTS.MAX_PAGES_SHOWN else num_pages
+    posts = posts[:POST_CONSTANTS.MAX_RESOURCES_PER_PAGE]
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
         tags[i] = tags[i]['tag']
     css = [{'prefix': 'css/compiled/', 'name': 'resources'}]
-    return render_template('resources.html', posts=posts, tags=tags, css=css, last_page=last_page, max_per_page=POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+    return render_template('resources.html', posts=posts, tags=tags, css=css, last_page=last_page, max_per_page=POST_CONSTANTS.MAX_RESOURCES_PER_PAGE, num_pages=num_pages, max_pages_shown=max_pages_shown)
 
 @post_blueprint.route('/<id>', methods=['GET'])
 def view(id):
@@ -124,6 +126,7 @@ def search():
         else:
             posts = list(reversed(list(Post.getAll())))
 
+        last_page = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
         posts = posts[:POST_CONSTANTS.MAX_RESOURCES_PER_PAGE]
 
         if posts is not None:
@@ -132,13 +135,12 @@ def search():
             for post in posts:
                 post['_id'] = str(post['_id'])
                 post['user_id'] = str(post['user_id'])
-        return jsonify({"status": status, "message": message, "posts": posts})
+        return jsonify({"status": status, "message": message, "posts": posts, "last_page": last_page})
     except Exception:
         return jsonify({"status": status, "message": message})
 
 @post_blueprint.route('/paginate/', methods=['GET'])
 def paginate():
-    direction = request.args['direction']
     page = int(request.args['page'])
     tag = request.args['tag']
     status = 'No good'
@@ -149,18 +151,8 @@ def paginate():
         else:
             posts = list(reversed(list(Post.getAll())))
 
-        last_page = math.floor(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
-        if direction == 'next':
-            if page == last_page:
-                raise Exception('On the last page, cannot go forwards')
-            page += 1
-        elif direction == 'prev':
-            if page == 0:
-                raise Exception('On the first page, cannot go backwards')
-            page -= 1
-
-        first_index = page * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
-        last_index = (page + 1) * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+        first_index = (page - 1) * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+        last_index = page * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
         posts = posts[first_index:last_index]
         if posts is not None:
             status = "OK"

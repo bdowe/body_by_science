@@ -44,7 +44,10 @@
             </div>
             <div class="pagination">
                 <a class="btn prev disabled" data-direction="prev">Previous</a>
-                <a class="btn next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-direction="next">Next</a>
+                {% for page in range(1, max_pages_shown + 1) %}
+                <a class="btn{{ ' disabled' if page == 1 else '' }}" data-page="{{ page }}">{{ page }}</a>
+                {% endfor %}
+                <a class="btn next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-direction="next" data-page="2">Next</a>
             </div>
         </div>
     </div>
@@ -80,18 +83,54 @@
         });
     }
 
+    var renderPagination = function(page, last_page, max_pages_shown) {
+        $('.pagination').empty();
+        var prev;
+        var button;
+        var next;
+        var minPage = 1;
+        var maxPage;
+        if (last_page <= 1) {
+            return;
+        } else if (last_page <= max_pages_shown) {
+            maxPage = last_page
+        } else if (page < Math.ceil(max_pages_shown / 2)) {
+            maxPage = max_pages_shown;
+        } else if (page <= last_page - 2) {
+            minPage = page - Math.floor(max_pages_shown / 2);
+            maxPage = page + Math.floor(max_pages_shown / 2);
+        } else {
+            minPage = last_page - (max_pages_shown - 1);
+            maxPage = last_page;
+        }
+
+        prev = $('<a>').addClass('btn prev').attr('data-page', page - 1).text('Prev');
+        if (page === 1) prev.addClass('disabled');
+        prev.appendTo($('.pagination'));
+        for (let i = minPage; i <= maxPage; i++) {
+            button = $('<a>').addClass('btn').attr('data-page', i).text(i);
+            if (i === page) button.addClass('disabled');
+            button.appendTo($('.pagination'));
+        }
+        next = $('<a>').addClass('btn next').attr('data-page', page + 1).text('Next');
+        if (page === last_page) next.addClass('disabled');
+        next.appendTo($('.pagination'));
+    }
+
     $(document).ready(function() {
-        let page = 0;
+        let page = 1;
         let last_page = {{ last_page }};
         let max_per_page = {{ max_per_page }};
+        let max_pages_shown = {{ max_pages_shown }};
 
-        $('.btn').click(function(e) {
+        $(document.body).on('click', '.btn', function(e) {
             e.preventDefault();
             let self = $(this);
+            let nextPage = self.data('page');
             let tag = $('.filter.selected').data('value');
             $.ajax({
                 url: '{{ url_for('posts.paginate') }}',
-                data: "direction="+self.data('direction')+"&page="+page+"&tag="+tag,
+                data: "page="+nextPage+"&tag="+tag,
                 type: 'GET',
                 beforeSend: function() {
                     $('.overlay').removeClass('hidden');
@@ -101,19 +140,9 @@
                         renderPosts(response.posts);
                         window.scrollTo(0, 0);
                         $('.posts-header').addClass('hidden');
-                        page = response.page;
+                        renderPagination(nextPage, last_page, max_pages_shown);
+                        page = nextPage
 
-                        if (page !== 0) {
-                            $('.btn.prev').removeClass('disabled');
-                        } else {
-                            $('.btn.prev').addClass('disabled');
-                        }
-
-                        if (page !== last_page) {
-                            $('.btn.next').removeClass('disabled');
-                        } else {
-                            $('.btn.next').addClass('disabled');
-                        }
                     } else {
                         $('.error').removeClass('hidden');
                         $('.error').text(response.message);
@@ -187,7 +216,7 @@
                             window.scrollTo(0, 0);
                             renderPosts(response.posts);
                             $('.btn.prev').addClass('disabled');
-                            page = 0;
+                            page = 1;
                             if (response.posts.length === 0) {
                                 $('.posts-header').removeClass('hidden');
                                 $('.posts-header h1').text("We don't have any resources for this category right now! Please try another.");
@@ -199,6 +228,10 @@
                                     $('.btn.next').removeClass('disabled');
                                 }
                             }
+
+                            last_page = response.last_page;
+                            renderPagination(page, last_page, max_pages_shown);
+
                         } else {
                             $('.error').removeClass('hidden');
                             $('.error').text(response.message);
