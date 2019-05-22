@@ -43,11 +43,11 @@
             {% endfor %}
             </div>
             <div class="pagination">
-                <a class="btn prev disabled" data-direction="prev">Previous</a>
+                <a class="page prev disabled">Prev</a>
                 {% for page in range(1, max_pages_shown + 1) %}
-                <a class="btn{{ ' disabled' if page == 1 else '' }}" data-page="{{ page }}">{{ page }}</a>
+                <a class="page{{ ' active disabled' if page == 1 else '' }}" data-page="{{ page }}">{{ page }}</a>
                 {% endfor %}
-                <a class="btn next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-direction="next" data-page="2">Next</a>
+                <a class="page next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-page="2">Next</a>
             </div>
         </div>
     </div>
@@ -104,15 +104,15 @@
             maxPage = last_page;
         }
 
-        prev = $('<a>').addClass('btn prev').attr('data-page', page - 1).text('Prev');
+        prev = $('<a>').addClass('page prev').attr('data-page', page - 1).text('Prev');
         if (page === 1) prev.addClass('disabled');
         prev.appendTo($('.pagination'));
         for (let i = minPage; i <= maxPage; i++) {
-            button = $('<a>').addClass('btn').attr('data-page', i).text(i);
-            if (i === page) button.addClass('disabled');
+            button = $('<a>').addClass('page').attr('data-page', i).text(i);
+            if (i === page) button.addClass('active disabled');
             button.appendTo($('.pagination'));
         }
-        next = $('<a>').addClass('btn next').attr('data-page', page + 1).text('Next');
+        next = $('<a>').addClass('page next').attr('data-page', page + 1).text('Next');
         if (page === last_page) next.addClass('disabled');
         next.appendTo($('.pagination'));
     }
@@ -123,7 +123,7 @@
         let max_per_page = {{ max_per_page }};
         let max_pages_shown = {{ max_pages_shown }};
 
-        $(document.body).on('click', '.btn', function(e) {
+        $(document.body).on('click', '.page', function(e) {
             e.preventDefault();
             let self = $(this);
             let nextPage = self.data('page');

@@ -73,8 +73,39 @@
         .container {
             .pagination {
                 display: flex;
-                max-width: 650px;
+                justify-content: center;
                 margin: 0 auto;
+                text-align: center;
+                .page {
+                    margin: 0 5px;
+                    font-size: 18px;
+                    transition: all 0.1s ease;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                    &.active {
+                        background-color: #06263C;
+                        color: #FFF;
+                    }
+                    &.disabled {
+                        pointer-events: none;
+                        &:not(.active) {
+                            opacity: 0.6;
+                        }
+                    }
+                    &:not(.prev):not(.next) {
+                        padding: 0 7px;
+                        height: 30px;
+                        width: 30px;
+                        padding-top: 3px;
+                        border-radius: 50%;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                        -moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                        box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+                    }
+                }
             }
             .posts-header {
                 margin-bottom: 30px;
