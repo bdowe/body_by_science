@@ -6,12 +6,12 @@
         <div class="container">
             <div class="filter-header">Topics:</div>
             <div class="filters">
-                <div class="filter all selected" data-value="all">
+                <div class="filter all{{ ' selected' if selectedTag == 'all' else '' }}" data-value="all">
                     <div class="checkmark"></div>
                     <span>All</span>
                 </div>
                 {% for tag in tags %}
-                    <div class="filter" data-value="{{ tag }}">
+                    <div class="filter{{ ' selected' if tag.lower() == selectedTag else '' }}" data-value="{{ tag }}">
                         <div class="checkmark"></div>
                         <span>{{ tag }}</span>
                     </div>
@@ -24,7 +24,7 @@
         <div class="overlay hidden"></div>
         <div class="container">
             <div class="posts-header">
-                <h1>Browse our Professionally Curated Resources</h1>
+                <h1>{{"Browse our Professionally Curated Resources" if num_pages > 0 else "We don't have any resources for this category right now! Please try another."}}</h1>
             </div>
             <div class="posts">
             {% for post in posts %}
@@ -43,11 +43,13 @@
             {% endfor %}
             </div>
             <div class="pagination">
-                <a class="page prev disabled">Prev</a>
-                {% for page in range(1, max_pages_shown + 1) %}
-                <a class="page{{ ' active disabled' if page == 1 else '' }}" data-page="{{ page }}">{{ page }}</a>
+                {% if num_pages > 1 %}
+                <a class="page prev{{ ' disabled' if page == 1 else ''}}">Prev</a>
+                {% for pageNumber in range(1, max_pages_shown + 1) %}
+                <a class="page{{ ' active disabled' if pageNumber == page else '' }}" data-page="{{ pageNumber }}">{{ pageNumber }}</a>
                 {% endfor %}
-                <a class="page next{{ ' disabled' if len(posts) < max_per_page else '' }}" data-page="2">Next</a>
+                <a class="page next{{ ' disabled' if len(posts) < max_per_page or page == num_pages else '' }}" data-page="2">Next</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -83,25 +85,25 @@
         });
     }
 
-    var renderPagination = function(page, last_page, max_pages_shown) {
+    var renderPagination = function(page, num_pages, max_pages_shown) {
         $('.pagination').empty();
         var prev;
         var button;
         var next;
         var minPage = 1;
         var maxPage;
-        if (last_page <= 1) {
+        if (num_pages <= 1) {
             return;
-        } else if (last_page <= max_pages_shown) {
-            maxPage = last_page
+        } else if (num_pages <= max_pages_shown) {
+            maxPage = num_pages
         } else if (page < Math.ceil(max_pages_shown / 2)) {
             maxPage = max_pages_shown;
-        } else if (page <= last_page - 2) {
+        } else if (page <= num_pages - 2) {
             minPage = page - Math.floor(max_pages_shown / 2);
             maxPage = page + Math.floor(max_pages_shown / 2);
         } else {
-            minPage = last_page - (max_pages_shown - 1);
-            maxPage = last_page;
+            minPage = num_pages - (max_pages_shown - 1);
+            maxPage = num_pages;
         }
 
         prev = $('<a>').addClass('page prev').attr('data-page', page - 1).text('Prev');
@@ -113,15 +115,19 @@
             button.appendTo($('.pagination'));
         }
         next = $('<a>').addClass('page next').attr('data-page', page + 1).text('Next');
-        if (page === last_page) next.addClass('disabled');
+        if (page === num_pages) next.addClass('disabled');
         next.appendTo($('.pagination'));
     }
 
     $(document).ready(function() {
-        let page = 1;
-        let last_page = {{ last_page }};
+        let page = {{ page }};
+        let num_pages = {{ num_pages }};
         let max_per_page = {{ max_per_page }};
         let max_pages_shown = {{ max_pages_shown }};
+
+        $(window).on("popstate", function (e) {
+            location.reload();
+        });
 
         $(document.body).on('click', '.page', function(e) {
             e.preventDefault();
@@ -140,9 +146,9 @@
                         renderPosts(response.posts);
                         window.scrollTo(0, 0);
                         $('.posts-header').addClass('hidden');
-                        renderPagination(nextPage, last_page, max_pages_shown);
+                        renderPagination(nextPage, num_pages, max_pages_shown);
                         page = nextPage
-
+                        window.history.pushState(null, null, window.location.pathname + '?page='+page);
                     } else {
                         $('.error').removeClass('hidden');
                         $('.error').text(response.message);
@@ -229,8 +235,11 @@
                                 }
                             }
 
-                            last_page = response.last_page;
-                            renderPagination(page, last_page, max_pages_shown);
+                            num_pages = response.num_pages;
+                            max_pages_shown = response.max_pages_shown;
+                            renderPagination(page, num_pages, max_pages_shown);
+                            let tag = el.data('value') !== 'all' ? el.data('value').toLowerCase() : ''
+                            window.history.pushState(null, null, '/resources/' + tag);
 
                         } else {
                             $('.error').removeClass('hidden');

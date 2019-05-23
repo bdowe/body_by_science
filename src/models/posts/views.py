@@ -11,20 +11,32 @@ import src.models.posts.constants as POST_CONSTANTS
 post_blueprint = Blueprint('posts', __name__)
 
 
-@post_blueprint.route('/', methods=['GET'])
-def all():
-    posts = list(reversed(list(Post.getAll())))
-    last_page = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+@post_blueprint.route('/', methods=['GET'], defaults={'tag': None})
+@post_blueprint.route('/<tag>')
+def all(tag):
+    if tag is not None:
+        posts = list(reversed(list(Post.getManyByTag(tag))))
+    else:
+        tag = 'all'
+        posts = list(reversed(list(Post.getAll())))
     num_pages = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
     max_pages_shown = POST_CONSTANTS.MAX_PAGES_SHOWN if num_pages >= POST_CONSTANTS.MAX_PAGES_SHOWN else num_pages
-    posts = posts[:POST_CONSTANTS.MAX_RESOURCES_PER_PAGE]
+    page = 1
+    if 'page' in request.args.keys():
+        if int(request.args['page']) <= num_pages:
+            page = int(request.args['page'])
+        else:
+            page = num_pages
+    first_index = (page - 1) * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+    last_index = page * POST_CONSTANTS.MAX_RESOURCES_PER_PAGE
+    posts = posts[first_index:last_index]
     tags = list(Post.getAllTags())
     for i in range(len(tags)):
-        tags[i] = tags[i]['tag']
+        tags[i] = tags[i]['tag'].capitalize()
     css = [{'prefix': 'css/compiled/', 'name': 'resources'}]
-    return render_template('resources.html', posts=posts, tags=tags, css=css, last_page=last_page, max_per_page=POST_CONSTANTS.MAX_RESOURCES_PER_PAGE, num_pages=num_pages, max_pages_shown=max_pages_shown)
+    return render_template('resources.html', posts=posts, tags=tags, css=css, selectedTag=tag, page=page, max_per_page=POST_CONSTANTS.MAX_RESOURCES_PER_PAGE, num_pages=num_pages, max_pages_shown=max_pages_shown)
 
-@post_blueprint.route('/<id>', methods=['GET'])
+@post_blueprint.route('/view/<id>', methods=['GET'])
 def view(id):
     post = Post.getOneById(id)
     if post:
@@ -122,11 +134,13 @@ def search():
         elif select_tag is not None:
             tag = select_tag
         if tag is not None and tag != "all":
+            tag = tag.lower()
             posts = list(reversed(list(Post.getManyByTag(tag))))
         else:
             posts = list(reversed(list(Post.getAll())))
 
-        last_page = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+        num_pages = math.ceil(len(posts) / POST_CONSTANTS.MAX_RESOURCES_PER_PAGE)
+        max_pages_shown = POST_CONSTANTS.MAX_PAGES_SHOWN if num_pages >= POST_CONSTANTS.MAX_PAGES_SHOWN else num_pages
         posts = posts[:POST_CONSTANTS.MAX_RESOURCES_PER_PAGE]
 
         if posts is not None:
@@ -135,7 +149,7 @@ def search():
             for post in posts:
                 post['_id'] = str(post['_id'])
                 post['user_id'] = str(post['user_id'])
-        return jsonify({"status": status, "message": message, "posts": posts, "last_page": last_page})
+        return jsonify({"status": status, "message": message, "posts": posts, "num_pages": num_pages, "max_pages_shown": max_pages_shown})
     except Exception:
         return jsonify({"status": status, "message": message})
 
@@ -147,6 +161,7 @@ def paginate():
     message = "We're having trouble loading our resources right now! Please try again later."
     try:
         if tag is not None and tag != "all":
+            tag = tag.lower()
             posts = list(reversed(list(Post.getManyByTag(tag))))
         else:
             posts = list(reversed(list(Post.getAll())))
@@ -181,7 +196,7 @@ def tagEditor():
 @user_decorators.requires_admin_permissions(return_user=False)
 def addTag():
     if request.method == 'POST':
-        tag = request.form['tag']
+        tag = request.form['tag'].lower()
         status = "No Good"
         message = "Error: tag not inserted"
 
