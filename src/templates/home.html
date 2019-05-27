@@ -11,7 +11,7 @@
         <div class="slides">
             <div class="slide-1">
                 <div class="image">
-                    <img class="left" src="//img1.wsimg.com/isteam/stock/gY0VzW1/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                    <img class="left lazy" data-src="//img1.wsimg.com/isteam/stock/gY0VzW1/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
                 </div>
                 <div class="text">
                     <div class="section-header">One site for all your needs</div>
@@ -25,12 +25,12 @@
                     <div class="section-text">Nutrition and exercise programs that fit your goals, lifestyle, body type and interests.</div>
                 </div>
                 <div class="image">
-                    <img class="right" src="//img1.wsimg.com/isteam/stock/6QyjY7j/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                    <img class="right lazy" data-src="//img1.wsimg.com/isteam/stock/6QyjY7j/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
                 </div>
             </div>
             <div class="slide-3">
                 <div class="image">
-                    <img class="left" src="//img1.wsimg.com/isteam/stock/Wb2a85r/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
+                    <img class="left lazy" data-src="//img1.wsimg.com/isteam/stock/Wb2a85r/:/rs=w:538,h:269,cg:true,m/cr=w:538,h:269" />
                 </div>
                 <div class="text">
                     <div class="section-header">Science based</div>
@@ -53,14 +53,14 @@
     <div class="container what-we-do">
         <div class="grid">
             <figure class="effect-chico">
-                <img src="../static/images/services1.jpeg"/>
+                <img class="lazy" data-src="../static/images/services1.jpeg"/>
                 <figcaption>
                     <h2>Program design</h2>
                     <p>Exercise routines designed specifically to reach your goals. No one person is the same, so why train that way?</p>
                 </figcaption>
             </figure>
             <figure class="effect-chico">
-                <img src="../static/images/services2.jpeg"/>
+                <img class="lazy" data-src="../static/images/services2.jpeg"/>
                 <figcaption>
                     <h2>Performance nutrition</h2>
                     <p>Nutrition consults intended to optimize current eating habits and boost performance on the field or in life.</p>
@@ -68,7 +68,7 @@
             </figure>
 
             <figure class="effect-chico">
-                <img src="../static/images/services3.jpeg"/>
+                <img class="lazy" data-src="../static/images/services3.jpeg"/>
                 <figcaption>
                     <h2>Individualized nutrition plans</h2>
                     <p>Analyze current dietary habits and design individualized meal plans to meet your nutrition goals.</p>
@@ -76,7 +76,7 @@
             </figure>
 
             <figure class="effect-chico">
-                <img src="../static/images/services4.jpeg"/>
+                <img class="lazy" data-src="../static/images/services4.jpeg"/>
                 <figcaption>
                     <h2>Supplement advice</h2>
                     <p>Learn about heavily clinically researched supplements and how to incorporate them safely and effectively into your routine.</p>
@@ -91,6 +91,68 @@
 </div>
 <script>
     $(document).ready(function() {
+        var lazyloadImages;
+        if ("IntersectionObserver" in window) {
+            lazyloadImages = document.querySelectorAll(".lazy");
+            let options = {
+                rootMargin: '50px 0px'
+            };
+            let callback = function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var image = entry.target;
+                        image.src = image.dataset.src;
+                        image.classList.remove("lazy");
+                        imageObserver.unobserve(image);
+                    }
+                });
+            }
+            var imageObserver = new IntersectionObserver(callback, options);
+
+            lazyloadImages.forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        } else {
+            var lazyloadThrottleTimeout;
+            lazyloadImages = $(".lazy");
+
+            function isElementAlmostInViewport(el) {
+                var top_of_element = el.offset().top;
+                var bottom_of_element = el.offset().top + el.outerHeight();
+                var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+                var top_of_screen = $(window).scrollTop();
+
+                return (bottom_of_screen > top_of_element - 50) && (top_of_screen < bottom_of_element + 50);
+            }
+
+            function lazyload () {
+                if(lazyloadThrottleTimeout) {
+                    clearTimeout(lazyloadThrottleTimeout);
+                }
+
+                lazyloadThrottleTimeout = setTimeout(function() {
+                    lazyloadImages.each(function() {
+                        let img = $(this);
+                        if(isElementAlmostInViewport(img)) {
+                            let src = img.data('src');
+                            img.attr('src', src);
+                            img.removeClass('lazy');
+                        }
+                    });
+                    if(lazyloadImages.length == 0) {
+                        document.removeEventListener("scroll", lazyload);
+                        window.removeEventListener("resize", lazyload);
+                        window.removeEventListener("orientationChange", lazyload);
+                    }
+                }, 20);
+            }
+
+            document.addEventListener("scroll", lazyload);
+            window.addEventListener("resize", lazyload);
+            window.addEventListener("orientationChange", lazyload);
+        }
+
+
 
         $('.slides').slick({
             fade: true,
