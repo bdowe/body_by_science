@@ -1,6 +1,6 @@
 Flask==1.0.2
 pymongo==3.7.1
 passlib==1.7.1
-requests==2.19.1
+requests==2.20.0
 uwsgi
 werkzeug=0.14.1
