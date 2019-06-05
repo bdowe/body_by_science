@@ -3,7 +3,6 @@ import json
 
 from src.database import Database
 from src.lesscss import lesscss
-from src.models.posts.post import Post
 from src.utils import Utils
 
 app = Flask(__name__) # '__main__'

@@ -1,7 +1,6 @@
 from bson.objectid import ObjectId
 from flask import session
 from src.database import Database
-from src.utils import Utils
 import datetime
 
 from src.models.users.user import User
