@@ -8,7 +8,7 @@ from src.utils import Utils
 app = Flask(__name__) # '__main__'
 app.config.from_object('src.config')
 app.secret_key = 'Brian'
-lesscss(app)
+# lesscss(app)   ## breaks on prod - no need to recompile every time on production
 
 from src.models.users.views import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/users")
